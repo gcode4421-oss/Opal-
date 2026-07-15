@@ -1,0 +1,38 @@
+# MANIFEST.in - Files to include in source distribution
+# الملفات المطلوب تضمينها في توزيع المصدر
+
+# Include README and documentation / تضمين README والتوثيق
+include README.md
+include CHANGELOG.md
+include LICENSE
+include pyproject.toml
+
+# Include install scripts / تضمين سكريبتات التثبيت
+include install.sh
+include install_termux.sh
+include install_universal.sh
+include install_windows.bat
+
+# Include CLI entry points / تضمين نقاط دخول CLI
+include opal_cli
+include bin/opal
+
+# Include all .op example files / تضمين كل ملفات الأمثلة
+recursive-include examples *.op
+
+# Include all test files / تضمين كل ملفات الاختبار
+recursive-include tests *.op *.py *.sh
+
+# Include all Python files / تضمين كل ملفات Python
+recursive-include opal *.py
+
+# Exclude unnecessary files / استبعاد الملفات غير الضرورية
+global-exclude __pycache__
+global-exclude *.pyc
+global-exclude *.pyo
+global-exclude .git
+global-exclude .gitignore
+global-exclude .DS_Store
+global-exclude *.egg-info
+global-exclude build
+global-exclude dist
