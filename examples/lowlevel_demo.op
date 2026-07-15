@@ -1,0 +1,181 @@
+// ==========================================
+// Opal Language - Low-Level Types Demo
+// لغة أوبال - عرض الأنواع منخفضة المستوى
+// For systems programming / لبرمجة الأنظمة
+// ==========================================
+
+import lowlevel
+
+echo "========================================"
+echo "  Low-Level Types Demo"
+echo "  عرض الأنواع منخفضة المستوى"
+echo "========================================"
+
+// ==========================================================
+// 1. Fixed-Size Integer Types / أنواع صحيحة بحجم ثابت
+// ==========================================================
+echo "\n=== 1. Integer Types / أنواع الأعداد ==="
+
+var a = int8(100)
+var b = int16(30000)
+var c = int32(2000000000)
+var d = int64(9000000000000)
+
+echo "int8(100) =", a
+echo "int16(30000) =", b
+echo "int32(2000000000) =", c
+echo "int64(9000000000000) =", d
+
+// Overflow behavior / سلوك الفيضان
+echo "\nOverflow examples / أمثلة الفيضان:"
+echo "int8(200) =", int8(200), "(wraps to -56)"
+echo "uint8(300) =", uint8(300), "(wraps to 44)"
+echo "int8(INT8_MAX + 1) =", int8(INT8_MAX + 1)
+
+// Unsigned types / الأنواع غير الموقعة
+echo "\nUnsigned types / الأنواع غير الموقعة:"
+echo "uint8(255) =", uint8(255)
+echo "uint16(65535) =", uint16(65535)
+echo "uint32(4000000000) =", uint32(4000000000)
+
+// ==========================================================
+// 2. Bit Operations / عمليات البت
+// ==========================================================
+echo "\n=== 2. Bit Operations / عمليات البت ==="
+
+var x = 12  // 1100 in binary
+var y = 10  // 1010 in binary
+
+echo "x =", x, "(binary: 1100)"
+echo "y =", y, "(binary: 1010)"
+echo "x AND y =", bit_and(x, y), "(1000 = 8)"
+echo "x OR y =", bit_or(x, y), "(1110 = 14)"
+echo "x XOR y =", bit_xor(x, y), "(0110 = 6)"
+echo "NOT x =", bit_not(x)
+echo "x << 2 =", shift_left(x, 2), "(110000 = 48)"
+echo "x >> 2 =", shift_right(x, 2), "(11 = 3)"
+
+// ==========================================================
+// 3. Byte Arrays / مصفوفات البايتات
+// ==========================================================
+echo "\n=== 3. Byte Arrays / مصفوفات البايتات ==="
+
+// Create byte array / إنشاء مصفوفة بايتات
+var data = bytes(8)
+echo "Created bytes(8), length:", data.length
+
+// Write bytes / كتابة بايتات
+data[0] = 72   // 'H'
+data[1] = 105   // 'i'
+data[2] = 33    // '!'
+
+// Read bytes / قراءة بايتات
+echo "data[0]:", data[0], "(H)"
+echo "data[1]:", data[1], "(i)"
+echo "data[2]:", data[2], "(!)"
+
+// Create from list / إنشاء من قائمة
+var text_bytes = bytes([72, 101, 108, 108, 111])
+echo "From list:", text_bytes
+
+// ==========================================================
+// 4. Memory Buffer / مخزن الذاكرة
+// ==========================================================
+echo "\n=== 4. Memory Buffer / مخزن الذاكرة ==="
+
+// Allocate buffer / حجز مخزن
+var buf = buffer(32)
+echo "Allocated buffer(32), size:", buf.size
+
+// Write integer at offset 0 / كتابة عدد في الموضع 0
+buf.write(42, 0)
+echo "Wrote int 42 at offset 0"
+
+// Read it back / قراءته
+var val = buf.read_int(0)
+echo "Read int from offset 0:", val
+
+// Write at different offset / كتابة في موضع مختلف
+buf.write(100, 8)
+echo "Wrote int 100 at offset 8"
+echo "Read from offset 8:", buf.read_int(8)
+
+// ==========================================================
+// 5. Type Sizes / أحجام الأنواع
+// ==========================================================
+echo "\n=== 5. Type Sizes / أحجام الأنواع ==="
+
+echo "sizeof(int8) =", sizeof("int8"), "bytes"
+echo "sizeof(uint8) =", sizeof("uint8"), "bytes"
+echo "sizeof(int16) =", sizeof("int16"), "bytes"
+echo "sizeof(int32) =", sizeof("int32"), "bytes"
+echo "sizeof(int64) =", sizeof("int64"), "bytes"
+echo "sizeof(float32) =", sizeof("float32"), "bytes"
+echo "sizeof(float64) =", sizeof("float64"), "bytes"
+
+// ==========================================================
+// 6. References / المراجع
+// ==========================================================
+echo "\n=== 6. References / المراجع ==="
+
+var num = 10
+var ref = ref(num)
+echo "Created ref to num (10)"
+echo "deref(ref) =", deref(ref)
+
+// Modify through reference / تعديل عبر المرجع
+ref.set(25)
+echo "After ref.set(25):", deref(ref)
+
+// ==========================================================
+// 7. Bytes <-> Number Conversion / تحويل البايتات والأرقام
+// ==========================================================
+echo "\n=== 7. Conversion / تحويل ==="
+
+// Number to bytes / رقم إلى بايتات
+var num_bytes = to_bytes(256, 4)
+echo "to_bytes(256, 4):", num_bytes
+
+// Bytes to number / بايتات إلى رقم
+var back = from_bytes([0, 1, 0, 0])  // 256 in little-endian
+echo "from_bytes([0, 1, 0, 0]):", back
+
+// ==========================================================
+// 8. Simulated Memory Layout / محاكاة تخطيط الذاكرة
+// ==========================================================
+echo "\n=== 8. Memory Layout / تخطيط الذاكرة ==="
+
+// Simulate a struct in memory / محاكاة بنية في الذاكرة
+var struct_buf = buffer(16)
+
+// Write fields / كتابة الحقول
+struct_buf.write(100, 0)    // field1 at offset 0
+struct_buf.write(200, 4)    // field2 at offset 4
+struct_buf.write(300, 8)    // field3 at offset 8
+
+echo "Struct fields:"
+echo "  field1 (offset 0):", struct_buf.read_int(0)
+echo "  field2 (offset 4):", struct_buf.read_int(4)
+echo "  field3 (offset 8):", struct_buf.read_int(8)
+
+// ==========================================================
+// 9. Constants / الثوابت
+// ==========================================================
+echo "\n=== 9. Constants / الثوابت ==="
+
+echo "INT8_MAX =", INT8_MAX
+echo "INT16_MAX =", INT16_MAX
+echo "INT32_MAX =", INT32_MAX
+echo "UINT8_MAX =", UINT8_MAX
+echo "UINT16_MAX =", UINT16_MAX
+
+echo "\n========================================"
+echo "  All low-level features work!"
+echo "  جميع الميزات منخفضة المستوى تعمل!"
+echo "========================================"
+echo ""
+echo "To compile to C / للتحويل إلى C:"
+echo "  opal this_file.op --compile-c"
+echo ""
+echo "This enables OS development with Opal!"
+echo "هذا يتيح تطوير أنظمة التشغيل بأوبال!"

@@ -23,7 +23,7 @@ from opal.interpreter import Interpreter, OpalError
 
 
 # Version / الإصدار
-OPAL_VERSION = "2.0.0"
+OPAL_VERSION = "2.1.0"
 
 
 def run_file(filepath, verbose=False):
@@ -172,26 +172,35 @@ def show_help():
 Opal Language v{OPAL_VERSION} - لغة أوبال للبرمجة
 
 Usage / الاستخدام:
-    opal <file.op>          تشغيل ملف أوبال / Run an Opal file
-    opal <file.op> --verbose تشغيل مع التفاصيل / Run with verbose output
-    opal --repl             واجهة تفاعلية / Start interactive REPL
-    opal --version          عرض الإصدار / Show version
-    opal --help             عرض هذه المساعدة / Show this help
+    opal <file.op>              تشغيل ملف أوبال / Run an Opal file
+    opal <file.op> --verbose    تشغيل مع التفاصيل / Run with verbose output
+    opal <file.op> --compile-c  تحويل إلى C / Transpile to C code
+    opal <file.op> --compile-c -o out.c  تحديد ملف الإخراج
+    opal --repl                 واجهة تفاعلية / Start interactive REPL
+    opal --version              عرض الإصدار / Show version
+    opal --help                 عرض هذه المساعدة / Show this help
 
 Examples / أمثلة:
     opal hello.op
     opal examples/math_demo.op
     opal --repl
+    opal program.op --compile-c
 
 Features / المميزات:
     ✓ Support for Arabic and English keywords
     ✓ دعم الكلمات المفتاحية بالعربية والإنجليزية
     ✓ Easy syntax for beginners
     ✓ صياغة سهلة للمبتدئين
-    ✓ Standard library (math, strings, lists, io, types)
+    ✓ Object-Oriented Programming (classes, inheritance)
+    ✓ البرمجة الكائنية (صفوف، وراثة)
+    ✓ Error handling (try/catch/finally)
+    ✓ معالجة الأخطاء
+    ✓ Lambda functions, dictionaries, switch
+    ✓ الدوال المجهولة، القواميس، التبديل
+    ✓ Standard library (math, strings, lists, io, json, http, file, time, system, lowlevel)
     ✓ مكتبة قياسية شاملة
-    ✓ Functions, loops, conditionals
-    ✓ دوال، حلقات، جمل شرطية
+    ✓ C transpiler for systems programming
+    ✓ مولّد كود C لبرمجة الأنظمة
 """)
 
 
@@ -206,9 +215,13 @@ def main():
     # Parse arguments
     verbose = False
     use_repl = False
+    compile_c = False
+    output_path = None
     filepath = None
 
-    for arg in args:
+    i = 0
+    while i < len(args):
+        arg = args[i]
         if arg == '--help' or arg == '-h':
             show_help()
             sys.exit(0)
@@ -219,16 +232,28 @@ def main():
             use_repl = True
         elif arg == '--verbose':
             verbose = True
+        elif arg == '--compile-c' or arg == '--cc':
+            compile_c = True
+        elif arg == '-o':
+            i += 1
+            if i < len(args):
+                output_path = args[i]
         elif arg.startswith('--'):
             print(f"خيار غير معروف: {arg} - Unknown option: {arg}")
             sys.exit(1)
         else:
             filepath = arg
+        i += 1
 
     if use_repl:
         repl()
     elif filepath:
-        run_file(filepath, verbose)
+        if compile_c:
+            # Compile to C / تحويل إلى C
+            from opal.c_transpiler import compile_file
+            compile_file(filepath, output_path)
+        else:
+            run_file(filepath, verbose)
     else:
         show_help()
 

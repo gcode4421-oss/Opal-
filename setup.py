@@ -9,7 +9,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="opal-lang",
-    version="2.0.0",
+    version="2.1.0",
     description="Opal - A powerful beginner-friendly programming language with Arabic and English support",
     long_description="""
 Opal Language v2.0 / لغة أوبال 2.0

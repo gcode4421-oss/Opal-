@@ -15,6 +15,7 @@ from . import http_lib
 from . import time_lib
 from . import system_lib
 from . import file_lib
+from . import lowlevel_lib
 
 
 # Registry of available modules / سجل الوحدات المتاحة
@@ -37,6 +38,11 @@ MODULES = {
     'files': file_lib.get_module,
     'filesystem': file_lib.get_module,
     'fs': file_lib.get_module,
+    'lowlevel': lowlevel_lib.get_module,
+    'low_level': lowlevel_lib.get_module,
+    'memory': lowlevel_lib.get_module,
+    'mem': lowlevel_lib.get_module,
+    'sys': lowlevel_lib.get_module,
 
     # Arabic module names
     'رياضيات': math_lib.get_module,
@@ -49,6 +55,8 @@ MODULES = {
     'نظام': system_lib.get_module,
     'ملفات': file_lib.get_module,
     'ملف': file_lib.get_module,
+    'منخفض': lowlevel_lib.get_module,
+    'ذاكرة': lowlevel_lib.get_module,
 }
 
 

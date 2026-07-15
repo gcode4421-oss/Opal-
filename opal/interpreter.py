@@ -21,6 +21,7 @@ from .ast_nodes import (
 )
 from .environment import Environment
 from .stdlib import load_module, module_exists
+from .stdlib.lowlevel_lib import OpalBytes, OpalBuffer, OpalRef
 
 
 # ==============================================================
@@ -747,7 +748,7 @@ class Interpreter:
                 f"Cannot assign to member of {type(obj).__name__}"
             )
 
-        # Index assignment: list[i] = value / dict[key] = value
+        # Index assignment: list[i] = value / dict[key] = value / bytes[i] = value
         if isinstance(node.target, IndexAccess):
             obj = self.evaluate(node.target.obj, env)
             index = self.evaluate(node.target.index, env)
@@ -764,6 +765,16 @@ class Interpreter:
             if isinstance(obj, dict):
                 obj[index] = value
                 return value
+
+            # Bytes/Buffer assignment / إسناد للبايتات أو المخزن
+            if isinstance(obj, (OpalBytes, OpalBuffer)):
+                idx = int(index)
+                if idx < 0:
+                    idx = len(obj) + idx
+                if 0 <= idx < len(obj):
+                    obj[idx] = int(value) & 0xFF
+                    return value
+                raise OpalError(f"الفهرس خارج النطاق: {idx} - Index out of range: {idx}")
 
             raise OpalError(
                 f"لا يمكن الإسناد إلى فهرس في {type(obj).__name__} - "
@@ -862,6 +873,15 @@ class Interpreter:
         if isinstance(obj, dict):
             return obj.get(index)
 
+        # OpalBytes and OpalBuffer support / دعم OpalBytes و OpalBuffer
+        if isinstance(obj, (OpalBytes, OpalBuffer)):
+            idx = int(index)
+            if idx < 0:
+                idx = len(obj) + idx
+            if 0 <= idx < len(obj):
+                return obj[idx]
+            raise OpalError(f"الفهرس خارج النطاق: {idx} - Index out of range: {idx}")
+
         raise OpalError(
             f"لا يمكن الفهرسة على: {type(obj).__name__} - "
             f"Cannot index into: {type(obj).__name__}"
@@ -940,6 +960,43 @@ class Interpreter:
             if member == 'split' or member == 'قسم':
                 return BuiltinFunction('split', lambda sep: obj.split(sep))
 
+        # OpalBytes methods / دوال OpalBytes
+        if isinstance(obj, OpalBytes):
+            if member == 'length' or member == 'طول' or member == 'size':
+                return len(obj)
+            if member == 'to_string' or member == 'إلى_نص':
+                return BuiltinFunction('to_string', lambda enc='utf-8': obj.to_string(enc))
+            if member == 'to_list' or member == 'إلى_قائمة':
+                return BuiltinFunction('to_list', lambda: obj.to_list())
+            if member == 'append' or member == 'أضف':
+                return BuiltinFunction('append', lambda byte: obj.append(byte))
+            if member == 'extend' or member == 'مدد':
+                return BuiltinFunction('extend', lambda other: obj.extend(other))
+
+        # OpalBuffer methods / دوال OpalBuffer
+        if isinstance(obj, OpalBuffer):
+            if member == 'size' or member == 'حجم' or member == 'length' or member == 'طول':
+                return obj.size
+            if member == 'write' or member == 'اكتب':
+                return BuiltinFunction('write', lambda value, offset=None: obj.write(value, offset))
+            if member == 'read' or member == 'اقرأ':
+                return BuiltinFunction('read', lambda offset, length: obj.read(offset, length))
+            if member == 'read_int' or member == 'اقرأ_عدد':
+                return BuiltinFunction('read_int', lambda offset: obj.read_int(offset))
+            if member == 'read_string' or member == 'اقرأ_نص':
+                return BuiltinFunction('read_string', lambda offset, length: obj.read_string(offset, length))
+            if member == 'clear' or member == 'امسح':
+                return BuiltinFunction('clear', lambda: obj.clear())
+
+        # OpalRef methods / دوال OpalRef
+        if isinstance(obj, OpalRef):
+            if member == 'get' or member == 'احصل':
+                return BuiltinFunction('get', lambda: obj.value)
+            if member == 'set' or member == 'ضع':
+                return BuiltinFunction('set', lambda value: obj.set(value))
+            if member == 'value' or member == 'قيمة':
+                return obj.value
+
         raise OpalError(
             f"'{member}' غير موجود في {type(obj).__name__} - "
             f"'{member}' not found in {type(obj).__name__}"
@@ -995,4 +1052,11 @@ class Interpreter:
                 if isinstance(result, str):
                     return result
             return f"<{value.opal_class.name} instance>"
+        # Low-level types / الأنواع منخفضة المستوى
+        if isinstance(value, OpalBytes):
+            return f"<bytes size={len(value.data)}>"
+        if isinstance(value, OpalBuffer):
+            return f"<buffer size={value.size}>"
+        if isinstance(value, OpalRef):
+            return f"<ref value={self.opal_to_string(value.value)}>"
         return str(value)
