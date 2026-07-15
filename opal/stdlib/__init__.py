@@ -16,6 +16,7 @@ from . import time_lib
 from . import system_lib
 from . import file_lib
 from . import lowlevel_lib
+from . import colors_lib
 
 
 # Registry of available modules / سجل الوحدات المتاحة
@@ -43,6 +44,10 @@ MODULES = {
     'memory': lowlevel_lib.get_module,
     'mem': lowlevel_lib.get_module,
     'sys': lowlevel_lib.get_module,
+    'colors': colors_lib.get_module,
+    'color': colors_lib.get_module,
+    'terminal': colors_lib.get_module,
+    'term': colors_lib.get_module,
 
     # Arabic module names
     'رياضيات': math_lib.get_module,
@@ -57,6 +62,9 @@ MODULES = {
     'ملف': file_lib.get_module,
     'منخفض': lowlevel_lib.get_module,
     'ذاكرة': lowlevel_lib.get_module,
+    'ألوان': colors_lib.get_module,
+    'لون': colors_lib.get_module,
+    'طرفية': colors_lib.get_module,
 }
 
 

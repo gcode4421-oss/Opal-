@@ -1,0 +1,103 @@
+// ==========================================
+// Opal Colors & Arabic Demo
+// عرض الألوان والعربية في أوبال
+// ==========================================
+
+import colors
+
+echo "========================================="
+echo "  Opal Colors Demo / عرض الألوان"
+echo "========================================="
+echo ""
+
+// Basic colors / ألوان أساسية
+echo RED + "Red / أحمر" + RESET
+echo GREEN + "Green / أخضر" + RESET
+echo YELLOW + "Yellow / أصفر" + RESET
+echo BLUE + "Blue / أزرق" + RESET
+echo MAGENTA + "Magenta / أرجواني" + RESET
+echo CYAN + "Cyan / سماوي" + RESET
+echo WHITE + "White / أبيض" + RESET
+
+echo ""
+
+// Bright colors / ألوان فاتحة
+echo BRIGHT_RED + "Bright Red / أحمر فاتح" + RESET
+echo BRIGHT_GREEN + "Bright Green / أخضر فاتح" + RESET
+echo BRIGHT_YELLOW + "Bright Yellow / أصفر فاتح" + RESET
+echo BRIGHT_BLUE + "Bright Blue / أزرق فاتح" + RESET
+echo BRIGHT_CYAN + "Bright Cyan / سماوي فاتح" + RESET
+
+echo ""
+
+// Styles / أنماط
+echo BOLD + "Bold text / نص عريض" + RESET
+echo ITALIC + "Italic text / نص مائل" + RESET
+echo UNDERLINE + "Underlined / تحته خط" + RESET
+echo BOLD + UNDERLINE + "Bold + Underline / عريض + خط" + RESET
+
+echo ""
+
+// Mixed colors and styles / ألوان وأنماط مختلطة
+echo BOLD + GREEN + "Success! / نجح!" + RESET
+echo BOLD + RED + "Error! / خطأ!" + RESET
+echo BOLD + YELLOW + "Warning! / تحذير!" + RESET
+echo BOLD + BLUE + "Info / معلومات" + RESET
+
+echo ""
+
+// Arabic with colors / عربي بالألوان
+echo أحمر + "هذا نص أحمر بالعربية" + إعادة
+echo أخضر + "هذا نص أخضر بالعربية" + إعادة
+echo أزرق + "هذا نص أزرق بالعربية" + إعادة
+echo أصفر + "هذا نص أصفر بالعربية" + إعادة
+
+echo ""
+
+// Using color() function / استخدام دالة color()
+echo color("Custom colored text", "cyan")
+echo color("نص مخصص اللون", "أخضر")
+echo color("Another color", "magenta")
+
+echo ""
+
+// RGB colors / ألوان RGB
+echo rgb("RGB: Purple (128,0,128)", 128, 0, 128)
+echo rgb("RGB: Orange (255,165,0)", 255, 165, 0)
+echo rgb("RGB: Teal (0,128,128)", 0, 128, 128)
+
+echo ""
+
+// Background colors / ألوان خلفية
+echo BG_RED + WHITE + " White on Red " + RESET
+echo BG_GREEN + BLACK + " Black on Green " + RESET
+echo BG_BLUE + WHITE + " White on Blue " + RESET
+
+echo ""
+
+// Status messages / رسائل الحالة
+function success(msg) {
+    echo GREEN + "[SUCCESS] " + RESET + msg
+}
+
+function error(msg) {
+    echo RED + "[ERROR] " + RESET + msg
+}
+
+function warning(msg) {
+    echo YELLOW + "[WARNING] " + RESET + msg
+}
+
+function info(msg) {
+    echo BLUE + "[INFO] " + RESET + msg
+}
+
+success("Operation completed / اكتملت العملية")
+error("Something went wrong / حدث خطأ ما")
+warning("Be careful / كن حذراً")
+info("For your information / للمعلومية")
+
+echo ""
+echo "========================================="
+echo "  Colors work! الألوان تعمل!"
+echo "========================================="

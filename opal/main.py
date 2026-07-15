@@ -219,6 +219,7 @@ def main():
     compile_c = False
     output_path = None
     filepath = None
+    color_mode = None  # None = auto, 'always', 'never'
 
     i = 0
     while i < len(args):
@@ -235,6 +236,16 @@ def main():
             verbose = True
         elif arg == '--compile-c' or arg == '--cc':
             compile_c = True
+        elif arg == '--color':
+            i += 1
+            if i < len(args):
+                color_mode = args[i]
+        elif arg == '--color=always':
+            color_mode = 'always'
+        elif arg == '--color=never':
+            color_mode = 'never'
+        elif arg == '--color=auto':
+            color_mode = 'auto'
         elif arg == '-o':
             i += 1
             if i < len(args):
@@ -245,6 +256,14 @@ def main():
         else:
             filepath = arg
         i += 1
+
+    # Apply color mode / تطبيق وضع الألوان
+    if color_mode == 'always':
+        import os
+        os.environ['FORCE_COLOR'] = '1'
+    elif color_mode == 'never':
+        import os
+        os.environ['NO_COLOR'] = '1'
 
     if use_repl:
         repl()
