@@ -1,0 +1,82 @@
+// ==========================================
+// Opal Language - Conditionals & Loops
+// لغة أوبال - الجمل الشرطية والحلقات
+// ==========================================
+
+// Conditionals / الجمل الشرطية
+var age = 18
+
+if age >= 18 {
+    echo "You are an adult"
+} else {
+    echo "You are a minor"
+}
+
+// elif chain / سلسلة elif
+var score = 85
+
+if score >= 90 {
+    echo "Grade: A"
+} elif score >= 80 {
+    echo "Grade: B"
+} elif score >= 70 {
+    echo "Grade: C"
+} elif score >= 60 {
+    echo "Grade: D"
+} else {
+    echo "Grade: F"
+}
+
+// Arabic conditionals / جمل شرطية بالعربية
+متغير درجة = 75
+
+اذا درجة >= 50 {
+    اطبع "ناجح"
+} والا {
+    اطبع "راسب"
+}
+
+// While loop / حلقة while
+echo "\nCountdown:"
+var count = 5
+while count > 0 {
+    echo count
+    count = count - 1
+}
+echo "Liftoff!"
+
+// For loop with range / حلقة for مع نطاق
+echo "\nNumbers 1-5:"
+for i in 1..5 {
+    echo i
+}
+
+// For loop over list / حلقة for على قائمة
+echo "\nFruits:"
+var fruits = ["apple", "banana", "cherry"]
+for fruit in fruits {
+    echo "-", fruit
+}
+
+// Break and continue / توقف واكمال
+echo "\nEven numbers 1-10:"
+for i in 1..10 {
+    if i % 2 != 0 {
+        continue
+    }
+    echo i
+}
+
+// Nested loops / حلقات متداخلة
+echo "\nMultiplication table:"
+for i in 1..3 {
+    for j in 1..3 {
+        echo i + " × " + j + " = " + (i * j)
+    }
+}
+
+// Arabic loop / حلقة بالعربية
+echo "\nعد بالعربية:"
+لكل ع في 1..5 {
+    اطبع ع
+}

@@ -1,0 +1,41 @@
+# Python / بايثون
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments / البيئات الافتراضية
+venv/
+env/
+ENV/
+.env
+
+# IDE / محررات الكود
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS / أنظمة التشغيل
+.DS_Store
+Thumbs.db
+
+# Opal compiled files / ملفات أوبال المترجمة
+*.opc

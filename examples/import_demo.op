@@ -1,0 +1,32 @@
+// ==========================================
+// Opal Language - Import Demo
+// لغة أوبال - عرض الاستيراد
+// ==========================================
+
+// Full module import / استيراد وحدة كاملة
+import math
+echo "Pi:", pi
+echo "Sqrt(16):", sqrt(16)
+
+// Selective import / استيراد محدد
+from strings import upper, lower, length
+echo "Upper:", upper("hello")
+echo "Lower:", lower("WORLD")
+echo "Length:", length("Opal")
+
+// Arabic module names / أسماء وحدات عربية
+استورد رياضيات
+echo "\nباي:", باي
+echo "الجذر(36):", الجذر(36)
+
+من نصوص استورد عكس, طول
+echo "\nعكس('Opal'):", عكس("Opal")
+echo "طول('أوبال'):", طول("أوبال")
+
+// Using imported functions together / استخدام الدوال المستوردة معاً
+من قوائم استورد رتب, مجموع
+
+متغير أرقام = [5, 2, 8, 1, 9, 3]
+اطبع "\nالأرقام:", أرقام
+اطبع "مرتبة:", رتب(أرقام)
+اطبع "المجموع:", مجموع(أرقام)

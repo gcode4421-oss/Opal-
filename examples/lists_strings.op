@@ -1,0 +1,59 @@
+// ==========================================
+// Opal Language - Lists & Strings Demo
+// لغة أوبال - عرض القوائم والنصوص
+// ==========================================
+
+import lists
+import strings
+
+// Lists / القوائم
+var numbers = [1, 2, 3, 4, 5]
+echo "List:", numbers
+echo "Length:", length(numbers)
+echo "First:", numbers[0]
+echo "Last:", numbers[4]
+
+// List operations / عمليات القوائم
+var fruits = ["apple", "banana", "cherry"]
+push(fruits, "date")
+echo "After push:", fruits
+
+var removed = pop(fruits)
+echo "Popped:", removed
+echo "After pop:", fruits
+
+echo "Contains 'apple':", contains(fruits, "apple")
+echo "Index of 'banana':", index_of(fruits, "banana")
+
+// List functions / دوال القوائم
+var nums = [3, 1, 4, 1, 5, 9, 2, 6]
+echo "\nOriginal:", nums
+echo "Sorted:", sort(nums)
+echo "Reversed:", reverse(nums)
+echo "Sum:", sum(nums)
+echo "Min:", min(nums)
+echo "Max:", max(nums)
+
+// String operations / عمليات النصوص
+echo "\n--- Strings ---"
+var text = "Hello Opal"
+echo "Original:", text
+echo "Upper:", upper(text)
+echo "Lower:", lower(text)
+echo "Length:", length(text)
+echo "Reversed:", reverse(text)
+echo "Contains 'Opal':", contains(text, "Opal")
+
+// String manipulation / معالجة النصوص
+var sentence = "The quick brown fox"
+var words = split(sentence, " ")
+echo "\nWords:", words
+echo "Joined:", join(words, "-")
+
+// Arabic strings / نصوص بالعربية
+echo "\n--- نصوص عربية ---"
+متغير نص = "مرحبا بك في أوبال"
+اطبع "النص:", نص
+اطبع "الطول:", طول(نص)
+اطبع "معكوس:", عكس(نص)
+اطبع "كبير:", كبير(نص)

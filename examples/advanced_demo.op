@@ -1,0 +1,138 @@
+// ==========================================
+// Opal Language - Advanced Demo
+// لغة أوبال - عرض متقدم
+// ==========================================
+
+import math
+import strings
+import lists
+
+echo "========================================"
+echo "    Opal Language - Advanced Demo"
+echo "    لغة أوبال - عرض متقدم"
+echo "========================================"
+
+// 1. Variables and Types
+echo "\n--- 1. Variables & Types ---"
+var int_val = 42
+var float_val = 3.14
+var string_val = "Opal"
+var bool_val = true
+var list_val = [1, 2, 3]
+
+echo "Integer:", int_val
+echo "Float:", float_val
+echo "String:", string_val
+echo "Boolean:", bool_val
+echo "List:", list_val
+
+// 2. Arithmetic
+echo "\n--- 2. Arithmetic ---"
+var a = 15
+var b = 4
+echo a, "+", b, "=", a + b
+echo a, "-", b, "=", a - b
+echo a, "*", b, "=", a * b
+echo a, "/", b, "=", a ÷ b
+echo a, "^", b, "=", a ^ b
+echo a, "%", b, "=", a % b
+
+// 3. String Operations
+echo "\n--- 3. String Operations ---"
+var greeting = "Hello"
+var name = "Opal"
+echo greeting + ", " + name + "!"
+echo "Upper:", upper(greeting)
+echo "Lower:", lower(greeting)
+echo "Length:", length(greeting)
+echo "Reversed:", reverse(greeting)
+
+// 4. Lists
+echo "\n--- 4. Lists ---"
+var numbers = [5, 3, 8, 1, 9, 2, 7]
+echo "Original:", numbers
+echo "Sorted:", sort(numbers)
+echo "Reversed:", reverse(numbers)
+echo "Sum:", sum(numbers)
+echo "Min:", min(numbers)
+echo "Max:", max(numbers)
+echo "Length:", length(numbers)
+
+// 5. Conditionals
+echo "\n--- 5. Conditionals ---"
+var score = 85
+var grade = ""
+if score >= 90 {
+    grade = "A"
+} elif score >= 80 {
+    grade = "B"
+} elif score >= 70 {
+    grade = "C"
+} else {
+    grade = "F"
+}
+echo "Score:", score, "-> Grade:", grade
+
+// 6. Loops
+echo "\n--- 6. Loops ---"
+echo "Countdown:"
+var i = 3
+while i > 0 {
+    echo "  ", i
+    i = i - 1
+}
+
+echo "For loop:"
+for j in 1..5 {
+    echo "  Item:", j
+}
+
+// 7. Functions
+echo "\n--- 7. Functions ---"
+function factorial(n) {
+    if n <= 1 {
+        return 1
+    }
+    return n * factorial(n - 1)
+}
+
+echo "Factorial of 5:", factorial(5)
+
+function is_even(n) {
+    return n % 2 == 0
+}
+
+echo "Is 4 even?", is_even(4)
+echo "Is 7 even?", is_even(7)
+
+// 8. Arabic Code
+echo "\n--- 8. Arabic Code ---"
+متغير الرسالة = "مرحبا بك في لغة أوبال"
+اطبع "الرسالة:", الرسالة
+اطبع "الطول:", طول(الرسالة)
+
+دالة مضروب(ن) {
+    اذا ن <= 1 {
+        ارجع 1
+    }
+    ارجع ن * مضروب(ن - 1)
+}
+
+اطبع "مضروب 5:", مضروب(5)
+
+متغير أرقام = [10، 20، 30، 40، 50]
+اطبع "الأرقام:", أرقام
+اطبع "المجموع:", مجموع(أرقام)
+اطبع "المتوسط:", مجموع(أرقام) ÷ طول(أرقام)
+
+// 9. Import
+echo "\n--- 9. Import ---"
+from math import sqrt, pi
+echo "Pi:", pi
+echo "Sqrt(144):", sqrt(144)
+
+// 10. Final
+echo "\n========================================"
+echo "  All features working correctly!"
+echo "  جميع المميزات تعمل بشكل صحيح!"
+echo "========================================"

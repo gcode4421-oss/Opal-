@@ -1,0 +1,10 @@
+#!/bin/bash
+# Opal Language CLI Wrapper / غلاف واجهة سطر الأوامر للغة أوبال
+# This script allows running: opal file.op
+# يسمح بتشغيل: opal file.op
+
+# Get the directory where this script is located
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Run the Python module
+exec python3 "$SCRIPT_DIR/opal/main.py" "$@"

@@ -1,0 +1,37 @@
+// ==========================================
+// Opal Language - Math Demo
+// لغة أوبال - عرض الرياضيات
+// ==========================================
+
+import math
+
+// Constants / الثوابت
+echo "Pi =", pi
+echo "E =", e
+
+// Basic math / رياضيات أساسية
+echo "\n--- Basic Math ---"
+echo "abs(-5) =", abs(-5)
+echo "sqrt(16) =", sqrt(16)
+echo "power(2, 10) =", power(2, 10)
+echo "floor(3.7) =", floor(3.7)
+echo "ceil(3.2) =", ceil(3.2)
+echo "round(3.5) =", round(3.5)
+echo "min(5, 3, 8) =", min(5, 3, 8)
+echo "max(5, 3, 8) =", max(5, 3, 8)
+
+// Trigonometry / حساب المثلثات
+echo "\n--- Trigonometry ---"
+echo "sin(0) =", sin(0)
+echo "cos(0) =", cos(0)
+
+// Random numbers / أرقام عشوائية
+echo "\n--- Random ---"
+echo "Random (0-1):", random()
+echo "Random int (1-100):", randint(1, 100)
+
+// Arabic math functions / دوال رياضية بالعربية
+echo "\n--- Math (Arabic) ---"
+echo "الجذر(25) =", الجذر(25)
+echo "القيمة_المطلقة(-10) =", القيمة_المطلقة(-10)
+echo "أس(2، 5) =", أس(2, 5)

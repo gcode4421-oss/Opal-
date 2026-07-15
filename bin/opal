@@ -1,0 +1,14 @@
+#!/bin/bash
+# Opal Language CLI - Global launcher
+# للتثبيت: انسخ هذا الملف إلى /usr/local/bin/opal
+# Install: copy this file to /usr/local/bin/opal
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# If running from the project, use project's opal package
+if [ -f "$SCRIPT_DIR/../opal/main.py" ]; then
+    exec python3 "$SCRIPT_DIR/../opal/main.py" "$@"
+else
+    # Try global install
+    exec python3 -m opal.main "$@"
+fi

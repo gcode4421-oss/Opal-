@@ -1,0 +1,59 @@
+// ==========================================
+// Opal Language - Functions Demo
+// لغة أوبال - عرض الدوال
+// ==========================================
+
+// Define a simple function / تعريف دالة بسيطة
+function greet(name) {
+    echo "Hello, " + name + "!"
+}
+
+// Call it / استدعاؤها
+greet("Opal")
+greet("World")
+
+// Function with return / دالة مع إرجاع
+function add(a, b) {
+    return a + b
+}
+
+var result = add(10, 20)
+echo "10 + 20 =", result
+
+// Arabic function / دالة بالعربية
+دالة جمع(أ، ب) {
+    ارجع أ + ب
+}
+
+اطبع "5 + 3 =", جمع(5, 3)
+
+// Recursive function - Fibonacci / دالة عودية - فيبوناتشي
+function fibonacci(n) {
+    if n <= 1 {
+        return n
+    }
+    return fibonacci(n - 1) + fibonacci(n - 2)
+}
+
+echo "\nFibonacci sequence:"
+for i in 0..10 {
+    echo "fib(" + i + ") =", fibonacci(i)
+}
+
+// Function with default behavior / دالة بسلوك افتراضي
+function multiply(a, b) {
+    return a * b
+}
+
+echo "\n5 × 4 =", multiply(5, 4)
+
+// Higher-order function / دالة من الدرجة العليا
+function apply_twice(func, value) {
+    return func(func(value))
+}
+
+function double(x) {
+    return x * 2
+}
+
+echo "apply_twice(double, 5) =", apply_twice(double, 5)

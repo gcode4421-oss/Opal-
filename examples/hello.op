@@ -1,0 +1,37 @@
+// ==========================================
+// Opal Language - Hello World Example
+// لغة أوبال - مثال مرحبا بالعالم
+// ==========================================
+
+// Print a simple message / طباعة رسالة بسيطة
+echo "Hello, World!"
+echo "مرحبا بالعالم!"
+
+// Variables / المتغيرات
+var name = "Opal"
+var version = 1.0
+var is_awesome = true
+
+echo "Language:", name
+echo "Version:", version
+echo "Is Awesome:", is_awesome
+
+// String concatenation / دمج النصوص
+var greeting = "Welcome to " + name + "!"
+echo greeting
+
+// Arabic variable names / أسماء متغيرات عربية
+متغير اسم = "أوبال"
+متغير إصدار = 1.0
+اطبع "الاسم:", اسم
+اطبع "الإصدار:", إصدار
+
+// Math operations / العمليات الحسابية
+var a = 10
+var b = 3
+echo "Addition:", a + b
+echo "Subtraction:", a - b
+echo "Multiplication:", a * b
+echo "Division:", a ÷ b
+echo "Power:", a ^ 2
+echo "Modulo:", a % b
