@@ -6,6 +6,23 @@
 
 ![Opal](https://img.shields.io/badge/Opal-2.1.0-blue) ![Python](https://img.shields.io/badge/Python-3.8+-green) ![License](https://img.shields.io/badge/License-MIT-yellow) ![Platform](https://img.shields.io/badge/Platform-All-success) ![Tests](https://img.shields.io/badge/Tests-9%2F9%20pass-brightgreen)
 
+[![PyPI version](https://badge.fury.io/py/opal-lang.svg)](https://badge.fury.io/py/opal-lang)
+[![GitHub release](https://img.shields.io/github/v/release/gcode4421-oss/Opal-)](https://github.com/gcode4421-oss/Opal-/releases)
+[![Install](https://img.shields.io/badge/pip%20install-opal--lang-blue)](https://pypi.org/project/opal-lang/)
+
+## Install / تثبيت
+
+```bash
+# From GitHub / من GitHub (works now / يعمل الآن)
+pip install git+https://github.com/gcode4421-oss/Opal-.git
+
+# From release wheel / من ملف الـ wheel المنشور
+pip install https://github.com/gcode4421-oss/Opal-/releases/download/v2.1.0/opal_lang-2.1.0-py3-none-any.whl
+
+# From PyPI (after publishing) / من PyPI (بعد النشر)
+pip install opal-lang
+```
+
 ## ما الجديد في الإصدار 2.1.0؟
 
 🚀 **تحديثات ضخمة:**
