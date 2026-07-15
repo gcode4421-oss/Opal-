@@ -1,0 +1,18 @@
+// ==========================================
+// Opal Hello World / أوبال - مرحبا بالعالم
+// The simplest Opal program
+// أبسط برنامج أوبال
+// ==========================================
+
+// English
+echo "Hello, World!"
+
+// Arabic
+اطبع "مرحبا بالعالم!"
+
+// With variables
+var name = "Opal"
+echo "Welcome to " + name + "!"
+
+متغير اسم = "أوبال"
+اطبع "مرحبا بك في " + اسم + "!"

@@ -1,0 +1,51 @@
+// ==========================================
+// Number Guessing Game / لعبة تخمين الرقم
+// The program picks a number, you guess
+// البرنامج يختار رقماً، وأنت تخمن
+// ==========================================
+
+import math
+
+// Generate a random number between 1 and 100
+// توليد رقم عشوائي بين 1 و 100
+var secret = randint(1, 100)
+var attempts = 0
+var max_attempts = 7
+var won = false
+
+echo "Number Guessing Game / لعبة تخمين الرقم"
+echo "========================================="
+echo "I picked a number between 1 and 100"
+echo "اخترت رقماً بين 1 و 100"
+echo "You have " + max_attempts + " attempts / لديك " + max_attempts + " محاولات"
+echo ""
+
+// Simulate guesses (since we can't take input in this demo)
+// محاكاة التخمينات (لأننا لا نستطيع أخذ إدخال في هذا العرض)
+var guesses = [50, 75, 60, 65, 62, 63, 64]
+
+for guess in guesses {
+    if won { break }
+    if attempts >= max_attempts { break }
+    
+    attempts += 1
+    echo "Attempt " + attempts + ": Guess = " + guess
+    
+    if guess == secret {
+        echo "  CORRECT! You won! / صحيح! فزت!"
+        won = true
+    } elif guess < secret {
+        echo "  Too low! Try higher / منخفض جداً! جرب أعلى"
+    } else {
+        echo "  Too high! Try lower / مرتفع جداً! جرب أقل"
+    }
+}
+
+echo ""
+if won {
+    echo "You won in " + attempts + " attempts!"
+    echo "فزت في " + attempts + " محاولات!"
+} else {
+    echo "Game over! The number was " + secret
+    echo "انتهت اللعبة! الرقم كان " + secret
+}

@@ -1,0 +1,83 @@
+// ==========================================
+// Temperature Converter / محول درجات الحرارة
+// Converts between Celsius, Fahrenheit, Kelvin
+// يحول بين مئوية، فهرنهايت، كلفن
+// ==========================================
+
+function celsius_to_fahrenheit(c) {
+    return (c * 9 / 5) + 32
+}
+
+function fahrenheit_to_celsius(f) {
+    return (f - 32) * 5 / 9
+}
+
+function celsius_to_kelvin(c) {
+    return c + 273.15
+}
+
+function kelvin_to_celsius(k) {
+    return k - 273.15
+}
+
+function fahrenheit_to_kelvin(f) {
+    return celsius_to_kelvin(fahrenheit_to_celsius(f))
+}
+
+function kelvin_to_fahrenheit(k) {
+    return celsius_to_fahrenheit(kelvin_to_celsius(k))
+}
+
+echo "Temperature Converter / محول درجات الحرارة"
+echo "============================================="
+echo ""
+
+// Test conversions / اختبار التحويلات
+var celsius = 25
+echo "Starting temperature: " + celsius + " C"
+echo ""
+
+echo "Celsius to Fahrenheit: " + celsius + " C = " + celsius_to_fahrenheit(celsius) + " F"
+echo "Celsius to Kelvin:     " + celsius + " C = " + celsius_to_kelvin(celsius) + " K"
+echo ""
+
+var fahrenheit = 98.6
+echo "Fahrenheit to Celsius: " + fahrenheit + " F = " + fahrenheit_to_celsius(fahrenheit) + " C"
+echo "Fahrenheit to Kelvin:  " + fahrenheit + " F = " + fahrenheit_to_kelvin(fahrenheit) + " K"
+echo ""
+
+var kelvin = 300
+echo "Kelvin to Celsius:     " + kelvin + " K = " + kelvin_to_celsius(kelvin) + " C"
+echo "Kelvin to Fahrenheit:  " + kelvin + " K = " + kelvin_to_fahrenheit(kelvin) + " F"
+echo ""
+
+// Temperature table / جدول درجات الحرارة
+echo "Temperature Table / جدول درجات الحرارة"
+echo "============================================="
+echo "Celsius | Fahrenheit | Kelvin"
+echo "-------|------------|-------"
+
+for c in 0..10 {
+    var f = celsius_to_fahrenheit(c)
+    var k = celsius_to_kelvin(c)
+    echo "  " + c + "    |    " + f + "   |  " + k
+}
+
+// Arabic version / النسخة العربية
+اطبع ""
+اطبع "محول درجات الحرارة بالعربية"
+اطبع "============================================="
+
+دالة من_مئوي_إلى_فهرنهايت(م) {
+    ارجع (م * 9 ÷ 5) + 32
+}
+
+دالة من_فهرنهايت_إلى_مئوي(ف) {
+    ارجع (ف - 32) * 5 ÷ 9
+}
+
+متغير درجة_مئوية = 30
+اطبع "30 مئوية = " + من_مئوي_إلى_فهرنهايت(درجة_مئوية) + " فهرنهايت"
+
+متغير درجة_فهرنهايت = 86
+اطبع "86 فهرنهايت = " + من_فهرنهايت_إلى_مئوي(درجة_فهرنهايت) + " مئوية"

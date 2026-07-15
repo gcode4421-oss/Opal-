@@ -1,0 +1,61 @@
+// ==========================================
+// Opal Simple Calculator / حاسبة بسيطة
+// Performs basic arithmetic operations
+// تقوم بعمليات حسابية أساسية
+// ==========================================
+
+function add(a, b) {
+    return a + b
+}
+
+function subtract(a, b) {
+    return a - b
+}
+
+function multiply(a, b) {
+    return a * b
+}
+
+function divide(a, b) {
+    if b == 0 {
+        return "Error: Division by zero"
+    }
+    return a / b
+}
+
+// Test the calculator
+var x = 20
+var y = 4
+
+echo "Calculator Demo / عرض الحاسبة"
+echo "=============================="
+echo "x = " + x + ", y = " + y
+echo ""
+echo "Addition:       " + x + " + " + y + " = " + add(x, y)
+echo "Subtraction:    " + x + " - " + y + " = " + subtract(x, y)
+echo "Multiplication: " + x + " * " + y + " = " + multiply(x, y)
+echo "Division:       " + x + " / " + y + " = " + divide(x, y)
+
+// Arabic version / النسخة العربية
+دالة جمع(أ، ب) {
+    ارجع أ + ب
+}
+
+دالة طرح(أ، ب) {
+    ارجع أ - ب
+}
+
+دالة ضرب(أ، ب) {
+    ارجع أ * ب
+}
+
+متغير أول = 15
+متغير ثاني = 5
+
+اطبع ""
+اطبع "الحاسبة بالعربية"
+اطبع "=============================="
+اطبع "الأول = " + أول + "، الثاني = " + ثاني
+اطبع "جمع: " + أول + " + " + ثاني + " = " + جمع(أول، ثاني)
+اطبع "طرح: " + أول + " - " + ثاني + " = " + طرح(أول، ثاني)
+اطبع "ضرب: " + أول + " * " + ثاني + " = " + ضرب(أول، ثاني)
