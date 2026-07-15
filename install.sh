@@ -102,6 +102,9 @@ fi
 
 cd "$INSTALL_DIR"
 
+# Make all entry points executable / جعل جميع نقاط الدخول قابلة للتنفيذ
+chmod +x opal/main.py opal_cli bin/opal install.sh install_termux.sh install_universal.sh 2>/dev/null || true
+
 # Install / التثبيت
 echo ""
 echo "[5/5] Installing Opal package / تثبيت حزمة أوبال..."
