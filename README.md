@@ -1,14 +1,20 @@
-# Opal Language v2.0 / لغة أوبال 2.0
+# Opal Language v2.1.0 / لغة أوبال 2.1.0
 
 <div dir="rtl">
 
 # لغة أوبال - لغة برمجة قوية وسهلة للمبتدئين والمحترفين
 
-![Opal](https://img.shields.io/badge/Opal-2.0.0-blue) ![Python](https://img.shields.io/badge/Python-3.8+-green) ![License](https://img.shields.io/badge/License-MIT-yellow) ![Platform](https://img.shields.io/badge/Platform-All-success)
+![Opal](https://img.shields.io/badge/Opal-2.1.0-blue) ![Python](https://img.shields.io/badge/Python-3.8+-green) ![License](https://img.shields.io/badge/License-MIT-yellow) ![Platform](https://img.shields.io/badge/Platform-All-success) ![Tests](https://img.shields.io/badge/Tests-9%2F9%20pass-brightgreen)
 
-## ما الجديد في الإصدار 2.0؟
+## ما الجديد في الإصدار 2.1.0؟
 
 🚀 **تحديثات ضخمة:**
+- ✅ **مكتبة الألوان (Colors)** - دعم كامل لـ ANSI colors بالعربية والإنجليزية
+- ✅ **الأنواع منخفضة المستوى (Low-level types)** - int8, int16, int32, int64, bytes, buffers
+- ✅ **مولّد كود C (C Transpiler)** - `opal file.op --compile-c` لتحويل الكود إلى C
+- ✅ **دعم العربية المحسّن** - تشكيل عربي، BiDi، علامات RTL/LTR
+- ✅ **تثبيت من أي مجلد** - `opal` يعمل من أي مسار بعد التثبيت
+- ✅ **--color=always/never/auto** - تحكم كامل في الألوان
 - ✅ **البرمجة الكائنية (OOP)** - صفوف، كائنات، وراثة، `this`
 - ✅ **معالجة الأخطاء** - `try/catch/finally` و `throw`
 - ✅ **الدوال المجهولة (Lambda)** - `fn(x) -> x * 2`
@@ -29,9 +35,15 @@
 
 ---
 
-## What's New in v2.0?
+## What's New in v2.1.0?
 
 🚀 **Massive Updates:**
+- ✅ **Colors Library** - Full ANSI color support with Arabic and English names
+- ✅ **Low-level types** - int8, int16, int32, int64, bytes, buffers, references
+- ✅ **C Transpiler** - `opal file.op --compile-c` to convert Opal to C code
+- ✅ **Improved Arabic support** - Arabic reshaping, BiDi, RTL/LTR marks
+- ✅ **System-wide installation** - `opal` works from any directory
+- ✅ **--color=always/never/auto** - Full color control
 - ✅ **Object-Oriented Programming (OOP)** - classes, objects, inheritance, `this`
 - ✅ **Error Handling** - `try/catch/finally` and `throw`
 - ✅ **Lambda Functions** - `fn(x) -> x * 2`
@@ -86,6 +98,12 @@ install_windows.bat
 pip install opal-lang
 ```
 
+بعد التثبيت، `opal` يعمل من **أي مجلد**:
+```bash
+cd /any/directory
+opal myfile.op
+```
+
 ---
 
 ## Quick Start / البداية السريعة
@@ -100,324 +118,141 @@ echo "Welcome to " + name
 اطبع "مرحبا بالعالم!"
 متغير اسم = "أوبال"
 اطبع "مرحبا بك في " + اسم
+
+// Colors / الألوان
+import colors
+echo RED + "Error!" + RESET
+echo أخضر + "نص أخضر بالعربية" + إعادة
+echo BOLD + BLUE + "Bold Blue" + RESET
 ```
 
 Save as `hello.op` and run / احفظ باسم `hello.op` وشغل:
 ```bash
 opal hello.op
+
+# With forced colors / مع إجبار الألوان
+opal hello.op --color=always
 ```
 
 ---
 
-## Language Features / مميزات اللغة
+## Standard Library / المكتبة القياسية (12 مكتبة)
 
-### 1. Variables & Constants / المتغيرات والثوابت
+| Library | Arabic Name | Description |
+|---------|-------------|-------------|
+| `math` | `رياضيات` | Math functions |
+| `strings` | `نصوص` | String manipulation |
+| `lists` | `قوائم` | List operations |
+| `io` | `إدخال_إخراج` | Input/output |
+| `types` | `أنواع` | Type checking |
+| `json` | - | JSON parse/stringify |
+| `http` | - | HTTP requests |
+| `file` | `ملفات` | File system operations |
+| `time` | `وقت` | Time and date |
+| `system` | `نظام` | OS information |
+| `lowlevel` | `منخفض` | Low-level types (int8, bytes, buffers) |
+| `colors` | `ألوان` | ANSI colors with Arabic support (NEW!) |
 
-```opal
-var name = "Opal"          // English
-const PI = 3.14159
-
-متغير الاسم = "أوبال"      // Arabic
-ثابت باي = 3.14159
-```
-
-### 2. Data Types / أنواع البيانات
-
-```opal
-var num = 42               // Integer
-var float = 3.14           // Float
-var str = "Hello"          // String
-var bool = true            // Boolean
-var nothing = null         // Null
-var list = [1, 2, 3]       // List
-var dict = {"a": 1, "b": 2}  // Dictionary (NEW!)
-```
-
-### 3. Object-Oriented Programming / البرمجة الكائنية (جديد!)
+### Colors Library Example / مثال مكتبة الألوان
 
 ```opal
-// English
-class Animal {
-    function init(name, sound) {
-        this.name = name
-        this.sound = sound
-    }
+import colors
 
-    function speak() {
-        echo this.name + " says " + this.sound
-    }
-}
+// English colors
+echo RED + "Red text" + RESET
+echo GREEN + "Green text" + RESET
+echo BLUE + "Blue text" + RESET
 
-class Dog : Animal {  // Inheritance
-    function fetch() {
-        echo this.name + " fetches the ball!"
-    }
-}
+// Arabic colors
+echo أحمر + "نص أحمر" + إعادة
+echo أخضر + "نص أخضر" + إعادة
+echo أزرق + "نص أزرق" + إعادة
 
-var dog = new Dog("Rex", "Woof")
-dog.speak()
-dog.fetch()
+// Styles
+echo BOLD + "Bold text" + RESET
+echo UNDERLINE + "Underlined" + RESET
+echo عريض + "نص عريض" + إعادة
 
-// Arabic
-صف حيوان {
-    دالة init(الاسم، الصوت) {
-        هذا.الاسم = الاسم
-        هذا.الصوت = الصوت
-    }
+// RGB custom colors
+echo rgb("Custom purple", 128, 0, 128)
 
-    دالة تكلم() {
-        اطبع هذا.الاسم + " يقول " + هذا.الصوت
-    }
-}
-
-متغير كلب = جديد حيوان("ريكس"، "هو هو")
-كلب.تكلم()
-```
-
-### 4. Error Handling / معالجة الأخطاء (جديد!)
-
-```opal
-try {
-    var result = 10 / 0
-} catch (error) {
-    echo "Caught error:", error
-} finally {
-    echo "Cleanup"
-}
-
-// Custom errors
-function check_age(age) {
-    if age < 18 {
-        throw "Too young!"
-    }
-    return "OK"
-}
-
-// Arabic
-حاول {
-    متغير نتيجة = 10 ÷ 0
-} أمسك (خطأ) {
-    اطبع "تم الإمساك بالخطأ:", خطأ
-} أخيرا {
-    اطبع "تنظيف"
-}
-```
-
-### 5. Lambda Functions / الدوال المجهولة (جديد!)
-
-```opal
-var double = fn(x) -> x * 2
-echo double(5)  // 10
-
-var greet = fn(name) {
-    return "Hello, " + name
-}
-
-// Using with map
-var nums = [1, 2, 3, 4, 5]
-var doubled = map(fn(x) -> x * 2, nums)
-echo doubled  // [2, 4, 6, 8, 10]
-```
-
-### 6. Dictionaries / القواميس (جديد!)
-
-```opal
-var person = {
-    "name": "Alice",
-    "age": 30,
-    "skills": ["Python", "Opal"]
-}
-
-echo person["name"]      // Alice
-person["age"] = 31       // Update
-person["city"] = "Cairo" // Add new
-```
-
-### 7. Switch / جملة التبديل (جديد!)
-
-```opal
-var day = 3
-switch (day) {
-    case 1: { echo "Monday" }
-    case 2: { echo "Tuesday" }
-    case 3: { echo "Wednesday" }
-    default: { echo "Other" }
-}
-```
-
-### 8. Ternary Operator / العملية الثلاثية (جديد!)
-
-```opal
-var age = 20
-var status = age >= 18 ? "Adult" : "Minor"
-echo status  // Adult
-
-// Nested
-var temp = 25
-var weather = temp > 30 ? "Hot" : temp > 20 ? "Warm" : "Cool"
-```
-
-### 9. Compound Assignment / الإسناد المركب (جديد!)
-
-```opal
-var x = 10
-x += 5   // x = 15
-x -= 3   // x = 12
-x *= 2   // x = 24
-x /= 4   // x = 6
-```
-
-### 10. Do-Until Loop / حلقة افعل-حتى (جديد!)
-
-```opal
-var i = 0
-do {
-    echo i
-    i += 1
-} until (i >= 3)
-```
-
-### 11. Block Comments / التعليقات المتعددة (جديد!)
-
-```opal
-// Single line comment
-# Also a comment
-
-/* Multi-line
-   comment
-   تعليق متعدد
-   الأسطر */
+// Status messages
+echo GREEN + "[SUCCESS] " + RESET + "Operation completed"
+echo RED + "[ERROR] " + RESET + "Something went wrong"
+echo YELLOW + "[WARNING] " + RESET + "Be careful"
 ```
 
 ---
 
-## Standard Library / المكتبة القياسية
+## C Transpiler / مولّد كود C
 
-### Math / رياضيات
+```bash
+# Convert Opal to C / تحويل أوبال إلى C
+opal program.op --compile-c -o program.c
 
-```opal
-import math
+# Compile with gcc / ترجمة بـ gcc
+gcc program.c -o program -lm
 
-echo pi              // 3.14159...
-echo sqrt(16)        // 4.0
-echo power(2, 10)    // 1024
-echo random()        // Random 0-1
-echo randint(1, 100) // Random int
+# Run / تشغيل
+./program
 ```
 
-### Strings / نصوص
-
-```opal
-import strings
-
-echo length("Hello")     // 5
-echo upper("hello")      // HELLO
-echo reverse("Opal")     // lapO
-echo split("a,b,c", ",") // [a, b, c]
-```
-
-### Lists / قوائم
-
-```opal
-import lists
-
-var nums = [3, 1, 4, 1, 5]
-echo sort(nums)      // [1, 1, 3, 4, 5]
-echo sum(nums)       // 14
-echo max(nums)       // 5
-echo reverse(nums)   // [5, 1, 4, 1, 3]
-```
-
-### JSON (جديد!)
-
-```opal
-import json
-
-var data = {"name": "Opal", "version": 2.0}
-var str = stringify(data)
-echo str  // {"name": "Opal", "version": 2.0}
-
-var parsed = parse(str)
-echo parsed["name"]  // Opal
-```
-
-### HTTP / ويب (جديد!)
-
-```opal
-import http
-
-var response = get("https://httpbin.org/get")
-echo response["status"]
-echo response["body"]
-
-var post_response = post("https://httpbin.org/post", {"key": "value"})
-echo post_response["status"]
-
-echo url_encode("Hello World")  // Hello%20World
-```
-
-### File System / نظام الملفات (جديد!)
-
-```opal
-import file
-
-// Read/Write
-write("test.txt", "Hello, Opal!")
-var content = read("test.txt")
-echo content
-
-// File info
-echo exists("test.txt")  // true
-echo size("test.txt")    // file size in bytes
-
-// Directory
-echo list_dir(".")       // list current directory
-mkdir("new_folder")
-```
-
-### Time & Date / الوقت والتاريخ (جديد!)
-
-```opal
-import time
-
-echo now()           // current timestamp
-echo date()          // current date string
-echo year()          // current year
-echo hour()          // current hour
-sleep(2)             // sleep 2 seconds
-```
-
-### System / نظام (جديد!)
-
-```opal
-import system
-
-echo os()            // Operating system name
-echo cwd()           // Current working directory
-echo list_dir(".")   // List files
-echo env("PATH")     // Environment variable
-```
+يدعم: variables, functions, recursion, if/elif/else, while, for, all operators, ternary, compound assignment, string concatenation.
 
 ---
 
-## Operators / العمليات
+## Examples / أمثلة
 
-| Operator | Arabic | Description |
-|----------|--------|-------------|
-| `+` | `+` | Addition / الجمع |
-| `-` | `-` | Subtraction / الطرح |
-| `*` | `*` | Multiplication / الضرب |
-| `/` or `÷` | `/` or `÷` | Division / القسمة |
-| `^` | `^` | Power / الأس |
-| `%` | `%` | Modulo / باقي القسمة |
-| `==` | `==` | Equal / يساوي |
-| `!=` | `!=` | Not equal / لا يساوي |
-| `<` `>` `<=` `>=` | same | Comparison / مقارنة |
-| `and` | `و` | Logical AND |
-| `or` | `أو` | Logical OR |
-| `not` | `ليس` | Logical NOT |
-| `+=` `-=` `*=` `/=` | same | Compound assign (NEW!) |
-| `? :` | `? :` | Ternary (NEW!) |
+### Beginner Examples (examples/preview/)
+- `hello.op` - Hello World (English + Arabic)
+- `calculator.op` - Simple calculator
+- `guessing_game.op` - Number guessing game
+- `temperature_converter.op` - Temperature converter
+- `colors_demo.op` - Colors showcase (English)
+- `arabic_colors_demo.op` - Colors + Arabic showcase
+
+### Advanced Examples (examples/)
+- `oop_demo.op` - Object-oriented programming
+- `arabic_oop_demo.op` - OOP in Arabic
+- `advanced_features.op` - All advanced features
+- `web_json_demo.op` - Web and JSON
+- `lowlevel_demo.op` - Low-level types
+- `math_demo.op`, `functions.op`, `conditionals.op`, etc.
+
+### Test Suite (tests/)
+- 9 test suites - all passing
+- `test_01_variables.op` through `test_08_imports.op`
+- `test_c_complex.op` - C transpiler verification
+
+---
+
+## Running Opal / تشغيل أوبال
+
+```bash
+# Run a file / تشغيل ملف
+opal file.op
+
+# With colors forced / مع إجبار الألوان
+opal file.op --color=always
+
+# Disable colors / تعطيل الألوان
+opal file.op --color=never
+
+# Verbose output / تفاصيل أكثر
+opal file.op --verbose
+
+# Compile to C / تحويل إلى C
+opal file.op --compile-c -o output.c
+
+# Interactive REPL / واجهة تفاعلية
+opal --repl
+
+# Version / الإصدار
+opal --version
+
+# Help / المساعدة
+opal --help
+```
 
 ---
 
@@ -432,7 +267,6 @@ echo env("PATH")     // Environment variable
 | `else` | `والا` | Else |
 | `while` | `بينما` | While loop |
 | `for` | `لكل` | For loop |
-| `in` | `في` | In (for loop) |
 | `function` | `دالة` | Function declaration |
 | `return` | `ارجع` | Return |
 | `break` | `توقف` | Break |
@@ -440,64 +274,18 @@ echo env("PATH")     // Environment variable
 | `import` | `استورد` | Import module |
 | `from` | `من` | From import |
 | `echo` | `اطبع` | Print |
-| `true` | `صحيح` | Boolean true |
-| `false` | `خطأ` | Boolean false |
-| `null` | `فراغ` | Null |
-| `and` | `و` | Logical AND |
-| `or` | `أو` | Logical OR |
-| `not` | `ليس` | Logical NOT |
-| `try` | `حاول` | Try (NEW!) |
-| `catch` | `امسك` | Catch (NEW!) |
-| `finally` | `اخيرا` | Finally (NEW!) |
-| `throw` | `ارمي` | Throw (NEW!) |
-| `class` | `صف` | Class (NEW!) |
-| `this` | `هذا` | This (NEW!) |
-| `new` | `جديد` | New instance (NEW!) |
-| `fn` | - | Lambda (NEW!) |
-| `switch` | `بدل` | Switch (NEW!) |
-| `case` | `حالة` | Case (NEW!) |
-| `default` | `افتراضي` | Default (NEW!) |
-| `do` | `افعل` | Do (NEW!) |
-| `until` | `حتى` | Until (NEW!) |
-
----
-
-## Running Opal / تشغيل أوبال
-
-```bash
-# Run a file / تشغيل ملف
-opal file.op
-
-# Verbose output / تفاصيل أكثر
-opal file.op --verbose
-
-# Interactive REPL / واجهة تفاعلية
-opal --repl
-
-# Version / الإصدار
-opal --version
-
-# Help / المساعدة
-opal --help
-```
-
----
-
-## Examples / أمثلة
-
-See the `examples/` directory for complete examples:
-- `hello.op` - Basic hello world
-- `math_demo.op` - Math library
-- `functions.op` - Functions and recursion
-- `conditionals.op` - Conditionals and loops
-- `lists_strings.op` - Lists and strings
-- `arabic_demo.op` - Full Arabic example
-- `import_demo.op` - Import system
-- `oop_demo.op` - Object-oriented programming (NEW!)
-- `arabic_oop_demo.op` - Arabic OOP (NEW!)
-- `advanced_features.op` - All advanced features (NEW!)
-- `web_json_demo.op` - Web and JSON (NEW!)
-- `advanced_demo.op` - Complete showcase
+| `try` | `حاول` | Try |
+| `catch` | `امسك` | Catch |
+| `finally` | `اخيرا` | Finally |
+| `throw` | `ارمي` | Throw |
+| `class` | `صف` | Class |
+| `this` | `هذا` | This |
+| `new` | `جديد` | New instance |
+| `switch` | `بدل` | Switch |
+| `case` | `حالة` | Case |
+| `do` | `افعل` | Do |
+| `until` | `حتى` | Until |
+| `fn` | - | Lambda |
 
 ---
 
@@ -513,6 +301,7 @@ Opal-/
 │   ├── parser.py          # Parser
 │   ├── environment.py     # Variable scopes
 │   ├── interpreter.py     # Interpreter
+│   ├── c_transpiler.py    # C code generator
 │   ├── main.py            # CLI entry point
 │   └── stdlib/
 │       ├── __init__.py    # Library loader
@@ -521,20 +310,42 @@ Opal-/
 │       ├── list_lib.py    # List functions
 │       ├── io_lib.py      # I/O functions
 │       ├── type_lib.py    # Type functions
-│       ├── json_lib.py    # JSON (NEW!)
-│       ├── http_lib.py    # HTTP (NEW!)
-│       ├── file_lib.py    # File system (NEW!)
-│       ├── time_lib.py    # Time (NEW!)
-│       └── system_lib.py  # System (NEW!)
-├── examples/              # Example programs
+│       ├── json_lib.py    # JSON
+│       ├── http_lib.py    # HTTP
+│       ├── file_lib.py    # File system
+│       ├── time_lib.py    # Time
+│       ├── system_lib.py  # System
+│       ├── lowlevel_lib.py # Low-level types
+│       └── colors_lib.py  # Colors (NEW!)
+├── examples/
+│   ├── preview/           # Beginner examples
+│   └── *.op               # Advanced examples
+├── tests/                 # Test suites (9 tests)
 ├── install.sh             # Linux/macOS installer
 ├── install_termux.sh      # Termux installer
 ├── install_windows.bat    # Windows installer
 ├── install_universal.sh   # Universal installer
 ├── setup.py               # Python package setup
 ├── README.md              # This file
-└── opal                   # CLI launcher
+└── opal_cli               # CLI launcher
 ```
+
+---
+
+## Test Results / نتائج الاختبارات
+
+| Test | Status |
+|------|--------|
+| test_01_variables | ✅ PASS |
+| test_02_control_flow | ✅ PASS |
+| test_03_functions | ✅ PASS |
+| test_04_oop | ✅ PASS |
+| test_05_error_handling | ✅ PASS |
+| test_06_advanced | ✅ PASS |
+| test_07_stdlib | ✅ PASS |
+| test_08_imports | ✅ PASS |
+| test_c_complex | ✅ PASS |
+| **Total** | **9/9 PASS** |
 
 ---
 
@@ -548,8 +359,16 @@ MIT License - Free to use, modify, and distribute.
 
 ## شكر وتقدير
 
-لغة أوبال v2.0 - أقوى وأسرع وأسهل من أي وقت مضى!
+لغة أوبال v2.1.0 - أقوى وأسرع وأسهل من أي وقت مضى!
 
 **استمتع بالبرمجة! 🚀**
 
 </div>
+
+---
+
+## Links / روابط
+
+- **Repository**: https://github.com/gcode4421-oss/Opal-
+- **Releases**: https://github.com/gcode4421-oss/Opal-/releases
+- **Issues**: https://github.com/gcode4421-oss/Opal-/issues
