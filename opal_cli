@@ -1,10 +1,26 @@
-#!/bin/bash
-# Opal Language CLI Wrapper / غلاف واجهة سطر الأوامر للغة أوبال
-# This script allows running: opal file.op
-# يسمح بتشغيل: opal file.op
+#!/usr/bin/env python3
+"""Opal Language CLI Entry Point / نقطة دخول واجهة سطر الأوامر للغة أوبال
 
-# Get the directory where this script is located
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+This file makes the opal command runnable directly as a Python script.
+هذا الملف يجعل أمر opal قابلاً للتشغيل مباشرة كـ Python script
 
-# Run the Python module
-exec python3 "$SCRIPT_DIR/opal/main.py" "$@"
+Usage / الاستخدام:
+    ./opal_cli file.op
+    ./opal_cli --repl
+    ./opal_cli --version
+"""
+
+import sys
+import os
+
+# Add the directory containing this file to Python path so we can find the opal package
+# أضف المجلد الذي يحتوي هذا الملف إلى مسار Python للعثور على حزمة opal
+_SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+if _SCRIPT_DIR not in sys.path:
+    sys.path.insert(0, _SCRIPT_DIR)
+
+# Import and run main
+from opal.main import main
+
+if __name__ == '__main__':
+    main()

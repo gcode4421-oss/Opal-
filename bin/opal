@@ -1,14 +1,44 @@
-#!/bin/bash
-# Opal Language CLI - Global launcher
-# للتثبيت: انسخ هذا الملف إلى /usr/local/bin/opal
-# Install: copy this file to /usr/local/bin/opal
+#!/usr/bin/env python3
+"""Opal Language CLI - bin entry point / نقطة دخول واجهة سطر الأوامر
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+This file should be symlinked or copied to /usr/local/bin/opal or ~/.local/bin/opal
+يجب ربط أو نسخ هذا الملف إلى /usr/local/bin/opal أو ~/.local/bin/opal
 
-# If running from the project, use project's opal package
-if [ -f "$SCRIPT_DIR/../opal/main.py" ]; then
-    exec python3 "$SCRIPT_DIR/../opal/main.py" "$@"
-else
-    # Try global install
-    exec python3 -m opal.main "$@"
-fi
+Usage / الاستخدام:
+    ./bin/opal file.op
+    ./bin/opal --repl
+"""
+
+import sys
+import os
+
+# Add the directory containing this file to Python path
+# أضف المجلد الذي يحتوي هذا الملف إلى مسار Python
+_SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+_PROJECT_DIR = os.path.dirname(_SCRIPT_DIR)  # parent of bin/
+
+# Look for opal package in multiple locations
+# ابحث عن حزمة opal في مواقع متعددة
+search_paths = [
+    _PROJECT_DIR,           # When run from project source
+    _SCRIPT_DIR,            # When bin/ is the project root
+    os.path.join(_PROJECT_DIR, 'opal'),  # If opal is in parent/opal
+]
+
+for path in search_paths:
+    if path not in sys.path:
+        sys.path.insert(0, path)
+
+# Try to import opal.main
+try:
+    from opal.main import main
+except ImportError:
+    # Fallback: try to find opal package
+    print("Error: Could not find the opal package.", file=sys.stderr)
+    print("خطأ: تعذر العثور على حزمة opal.", file=sys.stderr)
+    print(f"Searched in: {search_paths}", file=sys.stderr)
+    print("Please install with: pip install opal-lang", file=sys.stderr)
+    sys.exit(1)
+
+if __name__ == '__main__':
+    main()

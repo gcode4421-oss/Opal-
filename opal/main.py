@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Opal Language - Main Entry Point / نقطة الدخول الرئيسية
 
