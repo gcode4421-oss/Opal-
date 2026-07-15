@@ -23,7 +23,7 @@ from opal.interpreter import Interpreter, OpalError
 
 
 # Version / الإصدار
-OPAL_VERSION = "1.0.0"
+OPAL_VERSION = "2.0.0"
 
 
 def run_file(filepath, verbose=False):

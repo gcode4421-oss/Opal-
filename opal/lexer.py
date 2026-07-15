@@ -105,6 +105,10 @@ class Lexer:
             if ch == '#':
                 self.skip_comment()
                 continue
+            # Block comments /* ... */ / تعليقات متعددة الأسطر
+            if ch == '/' and self.peek(1) == '*':
+                self.skip_block_comment()
+                continue
 
             # Numbers / الأرقام
             if is_digit(ch):
@@ -134,6 +138,19 @@ class Lexer:
     def skip_comment(self):
         """تخطي التعليق حتى نهاية السطر / Skip comment to end of line"""
         while self.peek() != '\n' and self.peek() != '\0':
+            self.advance()
+
+    def skip_block_comment(self):
+        """تخطي تعليق متعدد الأسطر / Skip block comment /* ... */"""
+        self.advance()  # consume /
+        self.advance()  # consume *
+        while True:
+            if self.peek() == '\0':
+                break
+            if self.peek() == '*' and self.peek(1) == '/':
+                self.advance()  # consume *
+                self.advance()  # consume /
+                break
             self.advance()
 
     def read_number(self):
@@ -216,6 +233,13 @@ class Lexer:
         """يقرأ عامل أو فاصلة / Read operator or delimiter"""
         ch = self.peek()
 
+        # Three-character operators / عوامل من 3 أحرف
+        three_char = ch + self.peek(1) + self.peek(2)
+
+        if three_char == '...':
+            # Could be spread, but we'll treat as DOTDOT for now
+            pass
+
         # Two-character operators / عوامل من حرفين
         two_char = ch + self.peek(1)
 
@@ -243,6 +267,26 @@ class Lexer:
             self.advance(); self.advance()
             self.add_token(TokenType.ARROW, '->')
             return
+        if two_char == '+=':
+            self.advance(); self.advance()
+            self.add_token(TokenType.PLUS_ASSIGN, '+=')
+            return
+        if two_char == '-=':
+            self.advance(); self.advance()
+            self.add_token(TokenType.MINUS_ASSIGN, '-=')
+            return
+        if two_char == '*=':
+            self.advance(); self.advance()
+            self.add_token(TokenType.STAR_ASSIGN, '*=')
+            return
+        if two_char == '/=':
+            self.advance(); self.advance()
+            self.add_token(TokenType.SLASH_ASSIGN, '/=')
+            return
+        if two_char == '//':
+            self.advance(); self.advance()
+            self.add_token(TokenType.FLOOR_DIV, '//')
+            return
 
         # Single-character operators / عوامل من حرف واحد
         single = {
@@ -266,6 +310,7 @@ class Lexer:
             '.': TokenType.DOT,
             ':': TokenType.COLON,
             ';': TokenType.SEMICOLON,
+            '?': TokenType.QUESTION,
         }
 
         if ch in single:

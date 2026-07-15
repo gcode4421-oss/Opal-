@@ -41,6 +41,22 @@ class TokenType(Enum):
     OR = auto()            # or / أو
     NOT = auto()           # not / ليس
 
+    # Advanced Keywords / كلمات مفتاحية متقدمة
+    TRY = auto()           # try
+    CATCH = auto()         # catch
+    FINALLY = auto()       # finally
+    THROW = auto()         # throw / raise
+    CLASS = auto()         # class
+    THIS = auto()          # this
+    NEW = auto()           # new
+    LAMBDA = auto()        # lambda / fn
+    EACH = auto()          # each / map-style
+    SWITCH = auto()        # switch
+    CASE = auto()          # case
+    DEFAULT = auto()       # default
+    DO = auto()            # do
+    UNTIL = auto()         # until
+
     # Operators / العمليات
     PLUS = auto()          # +
     MINUS = auto()         # -
@@ -49,6 +65,7 @@ class TokenType(Enum):
     DIVIDE = auto()        # ÷ (Arabic-friendly division)
     POWER = auto()         # ^
     MODULO = auto()        # %
+    FLOOR_DIV = auto()     # // (integer division)
 
     ASSIGN = auto()        # =
     EQ = auto()            # ==
@@ -57,6 +74,10 @@ class TokenType(Enum):
     GT = auto()            # >
     LTE = auto()           # <=
     GTE = auto()           # >=
+    PLUS_ASSIGN = auto()   # +=
+    MINUS_ASSIGN = auto()  # -=
+    STAR_ASSIGN = auto()   # *=
+    SLASH_ASSIGN = auto()  # /=
 
     # Delimiters / الفواصل
     LPAREN = auto()        # (
@@ -71,6 +92,7 @@ class TokenType(Enum):
     COLON = auto()         # :
     SEMICOLON = auto()     # ;
     ARROW = auto()         # ->
+    QUESTION = auto()      # ? (ternary)
 
     # Special / خاصة
     NEWLINE = auto()
@@ -107,6 +129,23 @@ KEYWORDS = {
     'false': TokenType.FALSE,
     'null': TokenType.NULL,
     'fun': TokenType.FUNCTION,  # shortcut / اختصار
+    'fn': TokenType.LAMBDA,
+    'lambda': TokenType.LAMBDA,
+
+    # Advanced English keywords / كلمات إنجليزية متقدمة
+    'try': TokenType.TRY,
+    'catch': TokenType.CATCH,
+    'finally': TokenType.FINALLY,
+    'throw': TokenType.THROW,
+    'raise': TokenType.THROW,
+    'class': TokenType.CLASS,
+    'this': TokenType.THIS,
+    'new': TokenType.NEW,
+    'switch': TokenType.SWITCH,
+    'case': TokenType.CASE,
+    'default': TokenType.DEFAULT,
+    'do': TokenType.DO,
+    'until': TokenType.UNTIL,
 
     # Arabic keywords / كلمات عربية
     'متغير': TokenType.VAR,
@@ -139,6 +178,26 @@ KEYWORDS = {
     'خطا': TokenType.FALSE,
     'فراغ': TokenType.NULL,
     'عدم': TokenType.NULL,
+
+    # Advanced Arabic keywords / كلمات عربية متقدمة
+    'حاول': TokenType.TRY,
+    'امسك': TokenType.CATCH,
+    'أمسك': TokenType.CATCH,
+    'اخيرا': TokenType.FINALLY,
+    'أخيرا': TokenType.FINALLY,
+    'ارمي': TokenType.THROW,
+    'أرمي': TokenType.THROW,
+    'قذف': TokenType.THROW,
+    'صف': TokenType.CLASS,
+    'فصل': TokenType.CLASS,
+    'هذا': TokenType.THIS,
+    'جديد': TokenType.NEW,
+    'بدل': TokenType.SWITCH,
+    'حالة': TokenType.CASE,
+    'افتراضي': TokenType.DEFAULT,
+    'افعل': TokenType.DO,
+    'حتى': TokenType.UNTIL,
+    'دالة_مجهولة': TokenType.LAMBDA,
 }
 
 

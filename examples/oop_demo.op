@@ -1,0 +1,125 @@
+// ==========================================
+// Opal Language - OOP Demo (Classes)
+// لغة أوبال - عرض البرمجة الكائنية
+// ==========================================
+
+// Define a class / تعريف صف
+class Animal {
+    function init(name, sound) {
+        this.name = name
+        this.sound = sound
+    }
+
+    function speak() {
+        echo this.name + " says: " + this.sound
+    }
+
+    function describe() {
+        echo "I am " + this.name + " and I go " + this.sound
+    }
+}
+
+// Create instances / إنشاء كائنات
+var dog = new Animal("Rex", "Woof")
+var cat = new Animal("Whiskers", "Meow")
+
+// Call methods / استدعاء الدوال
+dog.speak()
+cat.speak()
+
+dog.describe()
+cat.describe()
+
+// Inheritance / الوراثة
+class Dog : Animal {
+    function init(name, breed) {
+        // Call parent constructor conceptually
+        this.name = name
+        this.sound = "Woof"
+        this.breed = breed
+    }
+
+    function fetch() {
+        echo this.name + " (" + this.breed + ") fetches the ball!"
+    }
+}
+
+var buddy = new Dog("Buddy", "Golden Retriever")
+buddy.speak()       // Inherited from Animal
+buddy.fetch()       // Defined in Dog
+
+// Counter class / صف العداد
+class Counter {
+    function init() {
+        this.count = 0
+    }
+
+    function increment() {
+        this.count += 1
+        return this.count
+    }
+
+    function decrement() {
+        this.count -= 1
+        return this.count
+    }
+
+    function reset() {
+        this.count = 0
+    }
+
+    function get_value() {
+        return this.count
+    }
+}
+
+var counter = new Counter()
+echo "\nCounter demo:"
+echo "Initial:", counter.get_value()
+counter.increment()
+counter.increment()
+counter.increment()
+echo "After 3 increments:", counter.get_value()
+counter.decrement()
+echo "After decrement:", counter.get_value()
+counter.reset()
+echo "After reset:", counter.get_value()
+
+// Bank Account / حساب بنكي
+class BankAccount {
+    function init(owner, initial_balance) {
+        this.owner = owner
+        this.balance = initial_balance
+        this.transactions = []
+    }
+
+    function deposit(amount) {
+        this.balance += amount
+        this.transactions.push("Deposit: +" + amount)
+        echo "Deposited " + amount + ". New balance: " + this.balance
+    }
+
+    function withdraw(amount) {
+        if amount > this.balance {
+            echo "Insufficient funds!"
+            return false
+        }
+        this.balance -= amount
+        this.transactions.push("Withdrawal: -" + amount)
+        echo "Withdrew " + amount + ". New balance: " + this.balance
+        return true
+    }
+
+    function info() {
+        echo "Account owner: " + this.owner
+        echo "Balance: " + this.balance
+        echo "Transactions: " + this.transactions.length
+    }
+}
+
+echo "\nBank Account demo:"
+var account = new BankAccount("Alice", 1000)
+account.deposit(500)
+account.withdraw(200)
+account.withdraw(2000)  // Should fail
+account.info()

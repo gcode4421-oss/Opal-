@@ -1,0 +1,146 @@
+// ==========================================
+// Opal Language - Advanced Features Demo
+// لغة أوبال - عرض الميزات المتقدمة
+// ==========================================
+
+echo "=== 1. Dict / القواميس ==="
+
+// Create a dictionary / إنشاء قاموس
+var person = {
+    "name": "Alice",
+    "age": 30,
+    "city": "Cairo"
+}
+
+echo "Name:", person["name"]
+echo "Age:", person["age"]
+echo "City:", person["city"]
+
+// Modify / تعديل
+person["age"] = 31
+person["country"] = "Egypt"
+echo "Updated age:", person["age"]
+echo "Country:", person["country"]
+
+echo "\n=== 2. Lambda / الدوال المجهولة ==="
+
+// Inline function / دالة في السطر
+var double = fn(x) -> x * 2
+echo "Double of 5:", double(5)
+
+// Lambda with block / دالة مجهولة مع كتلة
+var greet = fn(name) {
+    return "Hello, " + name + "!"
+}
+echo greet("Opal")
+
+// Using lambda with map / استخدام الدوال المجهولة مع map
+var numbers = [1, 2, 3, 4, 5]
+var doubled = map(fn(x) -> x * 2, numbers)
+echo "Doubled:", doubled
+
+echo "\n=== 3. Try/Catch / معالجة الأخطاء ==="
+
+try {
+    echo "Trying to divide..."
+    var result = 10 ÷ 0
+    echo "Result:", result
+} catch (error) {
+    echo "Caught error:", error
+} finally {
+    echo "Cleanup done"
+}
+
+// Throw custom error / رمي خطأ مخصص
+function check_age(age) {
+    if age < 18 {
+        throw "Too young!"
+    }
+    return "OK"
+}
+
+try {
+    echo check_age(15)
+} catch (e) {
+    echo "Error:", e
+}
+
+try {
+    echo check_age(25)
+} catch (e) {
+    echo "Error:", e
+}
+
+echo "\n=== 4. Switch / جملة التبديل ==="
+
+var day = 3
+switch (day) {
+    case 1: {
+        echo "Monday"
+    }
+    case 2: {
+        echo "Tuesday"
+    }
+    case 3: {
+        echo "Wednesday"
+    }
+    case 4: {
+        echo "Thursday"
+    }
+    case 5: {
+        echo "Friday"
+    }
+    default: {
+        echo "Weekend"
+    }
+}
+
+echo "\n=== 5. Ternary / العملية الثلاثية ==="
+
+var age = 20
+var status = age >= 18 ? "Adult" : "Minor"
+echo "Status:", status
+
+var temp = 25
+var weather = temp > 30 ? "Hot" : temp > 20 ? "Warm" : "Cool"
+echo "Weather:", weather
+
+echo "\n=== 6. Compound Assignment / الإسناد المركب ==="
+
+var x = 10
+echo "Initial x:", x
+x += 5
+echo "After += 5:", x
+x -= 3
+echo "After -= 3:", x
+x *= 2
+echo "After *= 2:", x
+x /= 4
+echo "After /= 4:", x
+
+echo "\n=== 7. Do-Until / افعل-حتى ==="
+
+var i = 0
+do {
+    echo "  i =", i
+    i += 1
+} until (i >= 3)
+
+echo "\n=== 8. JSON / مكتبة JSON ==="
+
+import json
+
+var data = {
+    "name": "Opal",
+    "version": 1.0,
+    "features": ["arabic", "english", "oop"]
+}
+
+var json_str = stringify(data)
+echo "JSON string:", json_str
+
+var parsed = parse(json_str)
+echo "Parsed name:", parsed["name"]
+
+echo "\n=== All advanced features work! ==="
+echo "جميع الميزات المتقدمة تعمل!"

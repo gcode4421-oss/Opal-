@@ -1,0 +1,124 @@
+// ==========================================
+// Opal Language - Web & JSON Demo
+// لغة أوبال - عرض الويب و JSON
+// ==========================================
+
+import json
+import http
+
+echo "=== 1. JSON Operations / عمليات JSON ==="
+
+// Create a dictionary / إنشاء قاموس
+var user = {
+    "name": "Alice",
+    "age": 30,
+    "email": "alice@example.com",
+    "skills": ["Python", "Opal", "JavaScript"],
+    "active": true
+}
+
+// Convert to JSON string / تحويل إلى نص JSON
+var json_str = stringify(user)
+echo "JSON string:"
+echo json_str
+
+// Parse JSON back / تحليل JSON
+var parsed = parse(json_str)
+echo "\nParsed back:"
+echo "Name:", parsed["name"]
+echo "Age:", parsed["age"]
+echo "Skills:", parsed["skills"]
+echo "Active:", parsed["active"]
+
+echo "\n=== 2. Nested JSON / JSON متداخل ==="
+
+var company = {
+    "name": "Opal Corp",
+    "founded": 2024,
+    "departments": [
+        {"name": "Engineering", "count": 25},
+        {"name": "Sales", "count": 10},
+        {"name": "Marketing", "count": 5}
+    ]
+}
+
+echo "Company:", company["name"]
+echo "Founded:", company["founded"]
+echo "Departments:"
+var depts = company["departments"]
+for dept in depts {
+    echo "  -", dept["name"], ":", dept["count"], "people"
+}
+
+echo "\n=== 3. Working with Lists of Dicts / قوائم القواميس ==="
+
+var students = [
+    {"name": "Ahmed", "grade": 95},
+    {"name": "Fatima", "grade": 88},
+    {"name": "Omar", "grade": 76},
+    {"name": "Layla", "grade": 92}
+]
+
+echo "Students:"
+for student in students {
+    var status = student["grade"] >= 90 ? "Excellent" : "Good"
+    echo "  " + student["name"] + ": " + student["grade"] + " (" + status + ")"
+}
+
+// Calculate average / حساب المتوسط
+var total = 0
+for student in students {
+    total += student["grade"]
+}
+var avg = total ÷ students.length
+echo "\nAverage grade:", avg
+
+echo "\n=== 4. HTTP Requests / طلبات HTTP ==="
+echo "Note: HTTP requests require internet connection"
+echo "ملاحظة: طلبات HTTP تحتاج اتصال بالإنترنت"
+
+// Example HTTP GET (commented out as it requires internet)
+// مثال على طلب HTTP (معطل لأنه يحتاج إنترنت)
+/*
+var response = get("https://httpbin.org/get")
+echo "Status:", response["status"]
+echo "Body:", response["body"]
+*/
+
+echo "\n=== 5. URL Encoding / ترميز URL ==="
+
+var url = "https://example.com/search"
+var query = "Opal programming language"
+var encoded = url_encode(query)
+echo "Original:", query
+echo "Encoded:", encoded
+echo "Full URL:", url + "?q=" + encoded
+
+echo "\n=== 6. JSON-like Data Processing / معالجة البيانات ==="
+
+// Simulate API response / محاكاة استجابة API
+var api_response = {
+    "status": "success",
+    "data": {
+        "users": [
+            {"id": 1, "name": "User 1"},
+            {"id": 2, "name": "User 2"},
+            {"id": 3, "name": "User 3"}
+        ],
+        "total": 3
+    }
+}
+
+if api_response["status"] == "success" {
+    var data = api_response["data"]
+    echo "Total users:", data["total"]
+
+    var users = data["users"]
+    echo "Users list:"
+    for user in users {
+        echo "  ID:", user["id"], "- Name:", user["name"]
+    }
+}
+
+echo "\n=== Web & JSON demo complete! ==="
+echo "اكتمل عرض الويب و JSON!"

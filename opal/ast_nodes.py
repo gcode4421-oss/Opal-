@@ -86,10 +86,21 @@ class UnaryOp(ASTNode):
 
 
 class Assignment(ASTNode):
-    """إسناد - x = value"""
-    def __init__(self, name, value, line=0, column=0):
+    """إسناد - x = value (or this.field = value, obj.prop = value)"""
+    def __init__(self, target, value, line=0, column=0):
         super().__init__(line, column)
-        self.name = name
+        self.target = target  # can be Identifier, MemberAccess, or IndexAccess
+        self.name = target.name if isinstance(target, Identifier) else None
+        self.value = value
+
+
+class CompoundAssign(ASTNode):
+    """إسناد مركب - x += 5 (or this.field += 5)"""
+    def __init__(self, target, op, value, line=0, column=0):
+        super().__init__(line, column)
+        self.target = target
+        self.name = target.name if isinstance(target, Identifier) else None
+        self.op = op  # TokenType
         self.value = value
 
 
@@ -123,6 +134,44 @@ class Range(ASTNode):
         super().__init__(line, column)
         self.start = start
         self.end = end
+
+
+class DictLiteral(ASTNode):
+    """قاموس - {key: value, key2: value2}"""
+    def __init__(self, pairs, line=0, column=0):
+        super().__init__(line, column)
+        self.pairs = pairs  # list of (key_expr, value_expr)
+
+
+class LambdaExpr(ASTNode):
+    """دالة مجهولة - fn(x) -> x * 2"""
+    def __init__(self, params, body, line=0, column=0):
+        super().__init__(line, column)
+        self.params = params
+        self.body = body
+
+
+class ThisExpr(ASTNode):
+    """this - الإشارة للكائن الحالي"""
+    def __init__(self, line=0, column=0):
+        super().__init__(line, column)
+
+
+class NewExpr(ASTNode):
+    """new ClassName(args) - إنشاء كائن جديد"""
+    def __init__(self, class_name, args, line=0, column=0):
+        super().__init__(line, column)
+        self.class_name = class_name
+        self.args = args
+
+
+class TernaryExpr(ASTNode):
+    """عملية ثلاثية - cond ? a : b"""
+    def __init__(self, condition, then_expr, else_expr, line=0, column=0):
+        super().__init__(line, column)
+        self.condition = condition
+        self.then_expr = then_expr
+        self.else_expr = else_expr
 
 
 # ==============================================================
@@ -227,6 +276,49 @@ class FromImportStmt(ASTNode):
         super().__init__(line, column)
         self.module_name = module_name
         self.names = names  # list of names to import
+
+
+class TryStmt(ASTNode):
+    """try/catch/finally - حاول/امسك/أخيرا"""
+    def __init__(self, try_block, catch_param, catch_block, finally_block=None, line=0, column=0):
+        super().__init__(line, column)
+        self.try_block = try_block
+        self.catch_param = catch_param  # variable name for caught error
+        self.catch_block = catch_block
+        self.finally_block = finally_block
+
+
+class ThrowStmt(ASTNode):
+    """throw expr - رمي خطأ"""
+    def __init__(self, value, line=0, column=0):
+        super().__init__(line, column)
+        self.value = value
+
+
+class ClassDecl(ASTNode):
+    """class definition - تعريف صف"""
+    def __init__(self, name, methods, parent=None, line=0, column=0):
+        super().__init__(line, column)
+        self.name = name
+        self.methods = methods  # list of FuncDecl
+        self.parent = parent    # parent class name
+
+
+class SwitchStmt(ASTNode):
+    """switch/case/default - بدل/حالة/افتراضي"""
+    def __init__(self, expr, cases, default_block=None, line=0, column=0):
+        super().__init__(line, column)
+        self.expr = expr
+        self.cases = cases  # list of (value_expr, block)
+        self.default_block = default_block
+
+
+class DoUntilStmt(ASTNode):
+    """do { } until (cond) - افعل {} حتى ()"""
+    def __init__(self, body, condition, line=0, column=0):
+        super().__init__(line, column)
+        self.body = body
+        self.condition = condition
 
 
 class Program(ASTNode):

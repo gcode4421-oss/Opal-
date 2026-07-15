@@ -1,216 +1,409 @@
-# Opal Language / لغة أوبال
+# Opal Language v2.0 / لغة أوبال 2.0
 
 <div dir="rtl">
 
-# لغة أوبال - لغة برمجة قوية وسهلة للمبتدئين
+# لغة أوبال - لغة برمجة قوية وسهلة للمبتدئين والمحترفين
 
-![Opal Logo](https://img.shields.io/badge/Opal-1.0.0-blue) ![Python](https://img.shields.io/badge/Python-3.8+-green) ![License](https://img.shields.io/badge/License-MIT-yellow)
+![Opal](https://img.shields.io/badge/Opal-2.0.0-blue) ![Python](https://img.shields.io/badge/Python-3.8+-green) ![License](https://img.shields.io/badge/License-MIT-yellow) ![Platform](https://img.shields.io/badge/Platform-All-success)
 
-## ما هي لغة أوبال؟
+## ما الجديد في الإصدار 2.0؟
 
-أوبال هي لغة برمجة حديثة مصممة خصيصاً للمبتدئين، تدعم الكلمات المفتاحية باللغتين **العربية** و**الإنجليزية** بالكامل. تم تصميمها لتكون سهلة التعلم والاستخدام، مع الحفاظ على القوة والمرونة.
-
-### المميزات الرئيسية:
-
-- ✅ **دعم كامل للعربية والإنجليزية** - اكتب الكود بأي لغة
-- ✅ **سهلة للمبتدئين** - صياغة بسيطة وواضحة
-- ✅ **مكتبة قياسية غنية** - رياضيات، نصوص، قوائم، إدخال/إخراج
-- ✅ **دوال وحلقات وجمل شرطية** - كل ما تحتاجه
-- ✅ **مفتوحة المصدر** - مجانية بالكامل
+🚀 **تحديثات ضخمة:**
+- ✅ **البرمجة الكائنية (OOP)** - صفوف، كائنات، وراثة، `this`
+- ✅ **معالجة الأخطاء** - `try/catch/finally` و `throw`
+- ✅ **الدوال المجهولة (Lambda)** - `fn(x) -> x * 2`
+- ✅ **القواميس (Dictionaries)** - `{"key": value}`
+- ✅ **جملة التبديل (Switch)** - `switch/case/default`
+- ✅ **العملية الثلاثية (Ternary)** - `cond ? a : b`
+- ✅ **الإسناد المركب** - `+=`, `-=`, `*=`, `/=`
+- ✅ **حلقة افعل-حتى (Do-Until)** - `do { } until (cond)`
+- ✅ **مكتبة JSON** - تحليل وتسلسل JSON
+- ✅ **مكتبة HTTP** - طلبات الويب
+- ✅ **مكتبة الملفات** - قراءة/كتابة/نسخ/نقل
+- ✅ **مكتبة الوقت** - الوقت والتاريخ
+- ✅ **مكتبة النظام** - معلومات نظام التشغيل
+- ✅ **التعليقات متعددة الأسطر** - `/* ... */`
+- ✅ **دعم Termux** - تثبيت سهل على الهاتف
 
 </div>
 
 ---
 
-## What is Opal?
+## What's New in v2.0?
 
-Opal is a modern programming language designed specifically for beginners, with full support for both **Arabic** and **English** keywords. It's designed to be easy to learn and use, while remaining powerful and flexible.
-
-### Key Features:
-
-- ✅ **Full Arabic and English support** - Write code in either language
-- ✅ **Beginner-friendly** - Simple, clear syntax
-- ✅ **Rich standard library** - Math, strings, lists, I/O
-- ✅ **Functions, loops, conditionals** - Everything you need
-- ✅ **Open source** - Completely free
+🚀 **Massive Updates:**
+- ✅ **Object-Oriented Programming (OOP)** - classes, objects, inheritance, `this`
+- ✅ **Error Handling** - `try/catch/finally` and `throw`
+- ✅ **Lambda Functions** - `fn(x) -> x * 2`
+- ✅ **Dictionaries** - `{"key": value}`
+- ✅ **Switch Statements** - `switch/case/default`
+- ✅ **Ternary Operator** - `cond ? a : b`
+- ✅ **Compound Assignment** - `+=`, `-=`, `*=`, `/=`
+- ✅ **Do-Until Loop** - `do { } until (cond)`
+- ✅ **JSON Library** - parse and stringify JSON
+- ✅ **HTTP Library** - web requests
+- ✅ **File Library** - read/write/copy/move
+- ✅ **Time Library** - time and date functions
+- ✅ **System Library** - OS information
+- ✅ **Block Comments** - `/* ... */`
+- ✅ **Termux Support** - easy install on mobile
 
 ---
 
 ## Installation / التثبيت
 
+### Termux (Android) / أندرويد
+
 ```bash
-# Clone the repository
+# Quick install / تثبيت سريع
+pkg install git python
 git clone https://github.com/gcode4421-oss/Opal-.git
 cd Opal-
-
-# Install Opal
-pip install -e .
-
-# Verify installation
-opal --version
+bash install_termux.sh
 ```
+
+### Linux / macOS
+
+```bash
+# Clone and install / استنساخ وتثبيت
+git clone https://github.com/gcode4421-oss/Opal-.git
+cd Opal-
+bash install.sh
+```
+
+### Windows
+
+```cmd
+:: Download and run / تحميل وتشغيل
+git clone https://github.com/gcode4421-oss/Opal-.git
+cd Opal-
+install_windows.bat
+```
+
+### pip (any platform / أي نظام)
+
+```bash
+pip install opal-lang
+```
+
+---
 
 ## Quick Start / البداية السريعة
 
-Create a file `hello.op`:
-
-```
-// English
+```opal
+// English / إنجليزي
 echo "Hello, World!"
-
-// Arabic
-اطبع "مرحبا بالعالم!"
-
-// Variables
 var name = "Opal"
-متغير اسم = "أوبال"
-
 echo "Welcome to " + name
+
+// Arabic / عربي
+اطبع "مرحبا بالعالم!"
+متغير اسم = "أوبال"
 اطبع "مرحبا بك في " + اسم
 ```
 
-Run it:
+Save as `hello.op` and run / احفظ باسم `hello.op` وشغل:
 ```bash
 opal hello.op
 ```
 
 ---
 
-## Language Syntax / صياغة اللغة
+## Language Features / مميزات اللغة
 
-### Variables / المتغيرات
+### 1. Variables & Constants / المتغيرات والثوابت
 
-```
-// English
-var name = "Opal"
-var age = 25
-var is_active = true
+```opal
+var name = "Opal"          // English
 const PI = 3.14159
 
-// Arabic
-متغير الاسم = "أوبال"
-متغير العمر = 25
-متغير نشط = صحيح
+متغير الاسم = "أوبال"      // Arabic
 ثابت باي = 3.14159
 ```
 
-### Printing / الطباعة
+### 2. Data Types / أنواع البيانات
 
+```opal
+var num = 42               // Integer
+var float = 3.14           // Float
+var str = "Hello"          // String
+var bool = true            // Boolean
+var nothing = null         // Null
+var list = [1, 2, 3]       // List
+var dict = {"a": 1, "b": 2}  // Dictionary (NEW!)
 ```
+
+### 3. Object-Oriented Programming / البرمجة الكائنية (جديد!)
+
+```opal
 // English
-echo "Hello"
-echo "Name:", name
-echo "Sum:", 5 + 3
-
-// Arabic
-اطبع "مرحبا"
-اطبع "الاسم:", الاسم
-اطبع "المجموع:", 5 + 3
-```
-
-### Conditionals / الجمل الشرطية
-
-```
-// English
-if age >= 18 {
-    echo "Adult"
-} elif age >= 13 {
-    echo "Teenager"
-} else {
-    echo "Child"
-}
-
-// Arabic
-اذا العمر >= 18 {
-    اطبع "بالغ"
-} واذا العمر >= 13 {
-    اطبع "مراهق"
-} والا {
-    اطبع "طفل"
-}
-```
-
-### Loops / الحلقات
-
-```
-// While loop
-var i = 0
-while i < 5 {
-    echo i
-    i = i + 1
-}
-
-// For loop with range
-for i in 1..10 {
-    echo i
-}
-
-// For loop over list
-var fruits = ["apple", "banana", "cherry"]
-for fruit in fruits {
-    echo fruit
-}
-
-// Arabic loops
-متغير س = 0
-بينما س < 5 {
-    اطبع س
-    س = س + 1
-}
-
-لكل رقم في 1..10 {
-    اطبع رقم
-}
-```
-
-### Functions / الدوال
-
-```
-// English
-function add(a, b) {
-    return a + b
-}
-
-echo add(5, 3)  // Output: 8
-
-// Recursive function
-function factorial(n) {
-    if n <= 1 {
-        return 1
+class Animal {
+    function init(name, sound) {
+        this.name = name
+        this.sound = sound
     }
-    return n * factorial(n - 1)
+
+    function speak() {
+        echo this.name + " says " + this.sound
+    }
 }
 
-echo factorial(5)  // Output: 120
+class Dog : Animal {  // Inheritance
+    function fetch() {
+        echo this.name + " fetches the ball!"
+    }
+}
+
+var dog = new Dog("Rex", "Woof")
+dog.speak()
+dog.fetch()
 
 // Arabic
-دالة جمع(أ، ب) {
-    ارجع أ + ب
+صف حيوان {
+    دالة init(الاسم، الصوت) {
+        هذا.الاسم = الاسم
+        هذا.الصوت = الصوت
+    }
+
+    دالة تكلم() {
+        اطبع هذا.الاسم + " يقول " + هذا.الصوت
+    }
 }
 
-اطبع جمع(5، 3)  // النتيجة: 8
+متغير كلب = جديد حيوان("ريكس"، "هو هو")
+كلب.تكلم()
 ```
 
-### Lists / القوائم
+### 4. Error Handling / معالجة الأخطاء (جديد!)
 
+```opal
+try {
+    var result = 10 / 0
+} catch (error) {
+    echo "Caught error:", error
+} finally {
+    echo "Cleanup"
+}
+
+// Custom errors
+function check_age(age) {
+    if age < 18 {
+        throw "Too young!"
+    }
+    return "OK"
+}
+
+// Arabic
+حاول {
+    متغير نتيجة = 10 ÷ 0
+} أمسك (خطأ) {
+    اطبع "تم الإمساك بالخطأ:", خطأ
+} أخيرا {
+    اطبع "تنظيف"
+}
 ```
-var numbers = [1, 2, 3, 4, 5]
-echo numbers[0]      // First element
-echo numbers.length   // Length: 5
 
-var mixed = [1, "hello", true, 3.14]
+### 5. Lambda Functions / الدوال المجهولة (جديد!)
 
-// List operations
-push(numbers, 6)     // Add to end
-pop(numbers)         // Remove from end
-echo reverse(numbers) // Reverse
-echo sort(numbers)    // Sort
+```opal
+var double = fn(x) -> x * 2
+echo double(5)  // 10
+
+var greet = fn(name) {
+    return "Hello, " + name
+}
+
+// Using with map
+var nums = [1, 2, 3, 4, 5]
+var doubled = map(fn(x) -> x * 2, nums)
+echo doubled  // [2, 4, 6, 8, 10]
 ```
 
-### Operators / العمليات
+### 6. Dictionaries / القواميس (جديد!)
 
-| English | Arabic | Description |
-|---------|--------|-------------|
+```opal
+var person = {
+    "name": "Alice",
+    "age": 30,
+    "skills": ["Python", "Opal"]
+}
+
+echo person["name"]      // Alice
+person["age"] = 31       // Update
+person["city"] = "Cairo" // Add new
+```
+
+### 7. Switch / جملة التبديل (جديد!)
+
+```opal
+var day = 3
+switch (day) {
+    case 1: { echo "Monday" }
+    case 2: { echo "Tuesday" }
+    case 3: { echo "Wednesday" }
+    default: { echo "Other" }
+}
+```
+
+### 8. Ternary Operator / العملية الثلاثية (جديد!)
+
+```opal
+var age = 20
+var status = age >= 18 ? "Adult" : "Minor"
+echo status  // Adult
+
+// Nested
+var temp = 25
+var weather = temp > 30 ? "Hot" : temp > 20 ? "Warm" : "Cool"
+```
+
+### 9. Compound Assignment / الإسناد المركب (جديد!)
+
+```opal
+var x = 10
+x += 5   // x = 15
+x -= 3   // x = 12
+x *= 2   // x = 24
+x /= 4   // x = 6
+```
+
+### 10. Do-Until Loop / حلقة افعل-حتى (جديد!)
+
+```opal
+var i = 0
+do {
+    echo i
+    i += 1
+} until (i >= 3)
+```
+
+### 11. Block Comments / التعليقات المتعددة (جديد!)
+
+```opal
+// Single line comment
+# Also a comment
+
+/* Multi-line
+   comment
+   تعليق متعدد
+   الأسطر */
+```
+
+---
+
+## Standard Library / المكتبة القياسية
+
+### Math / رياضيات
+
+```opal
+import math
+
+echo pi              // 3.14159...
+echo sqrt(16)        // 4.0
+echo power(2, 10)    // 1024
+echo random()        // Random 0-1
+echo randint(1, 100) // Random int
+```
+
+### Strings / نصوص
+
+```opal
+import strings
+
+echo length("Hello")     // 5
+echo upper("hello")      // HELLO
+echo reverse("Opal")     // lapO
+echo split("a,b,c", ",") // [a, b, c]
+```
+
+### Lists / قوائم
+
+```opal
+import lists
+
+var nums = [3, 1, 4, 1, 5]
+echo sort(nums)      // [1, 1, 3, 4, 5]
+echo sum(nums)       // 14
+echo max(nums)       // 5
+echo reverse(nums)   // [5, 1, 4, 1, 3]
+```
+
+### JSON (جديد!)
+
+```opal
+import json
+
+var data = {"name": "Opal", "version": 2.0}
+var str = stringify(data)
+echo str  // {"name": "Opal", "version": 2.0}
+
+var parsed = parse(str)
+echo parsed["name"]  // Opal
+```
+
+### HTTP / ويب (جديد!)
+
+```opal
+import http
+
+var response = get("https://httpbin.org/get")
+echo response["status"]
+echo response["body"]
+
+var post_response = post("https://httpbin.org/post", {"key": "value"})
+echo post_response["status"]
+
+echo url_encode("Hello World")  // Hello%20World
+```
+
+### File System / نظام الملفات (جديد!)
+
+```opal
+import file
+
+// Read/Write
+write("test.txt", "Hello, Opal!")
+var content = read("test.txt")
+echo content
+
+// File info
+echo exists("test.txt")  // true
+echo size("test.txt")    // file size in bytes
+
+// Directory
+echo list_dir(".")       // list current directory
+mkdir("new_folder")
+```
+
+### Time & Date / الوقت والتاريخ (جديد!)
+
+```opal
+import time
+
+echo now()           // current timestamp
+echo date()          // current date string
+echo year()          // current year
+echo hour()          // current hour
+sleep(2)             // sleep 2 seconds
+```
+
+### System / نظام (جديد!)
+
+```opal
+import system
+
+echo os()            // Operating system name
+echo cwd()           // Current working directory
+echo list_dir(".")   // List files
+echo env("PATH")     // Environment variable
+```
+
+---
+
+## Operators / العمليات
+
+| Operator | Arabic | Description |
+|----------|--------|-------------|
 | `+` | `+` | Addition / الجمع |
 | `-` | `-` | Subtraction / الطرح |
 | `*` | `*` | Multiplication / الضرب |
@@ -219,168 +412,92 @@ echo sort(numbers)    // Sort
 | `%` | `%` | Modulo / باقي القسمة |
 | `==` | `==` | Equal / يساوي |
 | `!=` | `!=` | Not equal / لا يساوي |
-| `<` | `<` | Less than / أصغر من |
-| `>` | `>` | Greater than / أكبر من |
-| `and` | `و` | Logical AND / و |
-| `or` | `أو` | Logical OR / أو |
-| `not` | `ليس` | Logical NOT | ليس |
+| `<` `>` `<=` `>=` | same | Comparison / مقارنة |
+| `and` | `و` | Logical AND |
+| `or` | `أو` | Logical OR |
+| `not` | `ليس` | Logical NOT |
+| `+=` `-=` `*=` `/=` | same | Compound assign (NEW!) |
+| `? :` | `? :` | Ternary (NEW!) |
 
 ---
 
-## Standard Library / المكتبة القياسية
+## Keyword Reference / مرجع الكلمات المفتاحية
 
-### Math Library / مكتبة الرياضيات
-
-```
-import math
-
-// Constants
-echo pi          // 3.14159...
-echo e           // 2.71828...
-
-// Functions
-echo sqrt(16)    // 4.0
-echo abs(-5)     // 5
-echo power(2, 3) // 8
-echo floor(3.7)  // 3
-echo ceil(3.2)   // 4
-echo round(3.5)  // 4
-echo min(5, 3)   // 3
-echo max(5, 3)   // 5
-echo random()    // Random 0-1
-echo randint(1, 100) // Random int
-
-// Arabic
-استورد رياضيات
-echo باي
-echo الجذر(25)
-echo القيمة_المطلقة(-10)
-echo أس(2، 5)
-```
-
-### String Library / مكتبة النصوص
-
-```
-import strings
-
-echo length("Hello")       // 5
-echo upper("hello")        // HELLO
-echo lower("WORLD")        // world
-echo reverse("Opal")       // lapO
-echo contains("Hello", "ell") // true
-echo replace("Hello", "H", "J") // Jello
-echo split("a,b,c", ",")   // [a, b, c]
-
-// Arabic
-استورد نصوص
-echo طول("أوبال")
-echo عكس("مرحبا")
-echo كبير("abc")
-```
-
-### List Library / مكتبة القوائم
-
-```
-import lists
-
-var nums = [3, 1, 4, 1, 5, 9, 2, 6]
-
-echo length(nums)    // 8
-echo sort(nums)      // [1, 1, 2, 3, 4, 5, 6, 9]
-echo reverse(nums)   // [6, 2, 9, 5, 1, 4, 1, 3]
-echo sum(nums)       // 31
-echo min(nums)       // 1
-echo max(nums)       // 9
-echo contains(nums, 5) // true
-```
-
-### Selective Import / استيراد محدد
-
-```
-from strings import upper, lower, length
-from math import sqrt, pi
-
-echo upper("hello")
-echo sqrt(16)
-echo pi
-```
-
----
-
-## Complete Example / مثال كامل
-
-```
-// ==========================================
-// Opal Language - Complete Demo
-// ==========================================
-
-import math
-import strings
-
-// Variables
-var name = "Opal"
-var version = 1.0
-
-echo "=== " + name + " " + version + " ==="
-
-// Function definition
-function fibonacci(n) {
-    if n <= 1 {
-        return n
-    }
-    return fibonacci(n - 1) + fibonacci(n - 2)
-}
-
-// Generate Fibonacci sequence
-echo "\nFibonacci:"
-for i in 0..10 {
-    echo "  fib(" + i + ") =", fibonacci(i)
-}
-
-// List operations
-var numbers = [5, 2, 8, 1, 9, 3]
-echo "\nOriginal:", numbers
-echo "Sorted:", sort(numbers)
-echo "Sum:", sum(numbers)
-echo "Average:", sum(numbers) / length(numbers))
-
-// Arabic section
-متغير أسماء = ["أحمد", "فاطمة", "علي"]
-اطبع "\nالأسماء:"
-لكل اسم في أسماء {
-    اطبع "  -", اسم
-}
-```
+| English | Arabic | Description |
+|---------|--------|-------------|
+| `var` | `متغير` | Variable declaration |
+| `const` | `ثابت` | Constant declaration |
+| `if` | `اذا` | If statement |
+| `elif` | `واذا` | Else if |
+| `else` | `والا` | Else |
+| `while` | `بينما` | While loop |
+| `for` | `لكل` | For loop |
+| `in` | `في` | In (for loop) |
+| `function` | `دالة` | Function declaration |
+| `return` | `ارجع` | Return |
+| `break` | `توقف` | Break |
+| `continue` | `اكمل` | Continue |
+| `import` | `استورد` | Import module |
+| `from` | `من` | From import |
+| `echo` | `اطبع` | Print |
+| `true` | `صحيح` | Boolean true |
+| `false` | `خطأ` | Boolean false |
+| `null` | `فراغ` | Null |
+| `and` | `و` | Logical AND |
+| `or` | `أو` | Logical OR |
+| `not` | `ليس` | Logical NOT |
+| `try` | `حاول` | Try (NEW!) |
+| `catch` | `امسك` | Catch (NEW!) |
+| `finally` | `اخيرا` | Finally (NEW!) |
+| `throw` | `ارمي` | Throw (NEW!) |
+| `class` | `صف` | Class (NEW!) |
+| `this` | `هذا` | This (NEW!) |
+| `new` | `جديد` | New instance (NEW!) |
+| `fn` | - | Lambda (NEW!) |
+| `switch` | `بدل` | Switch (NEW!) |
+| `case` | `حالة` | Case (NEW!) |
+| `default` | `افتراضي` | Default (NEW!) |
+| `do` | `افعل` | Do (NEW!) |
+| `until` | `حتى` | Until (NEW!) |
 
 ---
 
 ## Running Opal / تشغيل أوبال
 
 ```bash
-# Run a file
+# Run a file / تشغيل ملف
 opal file.op
 
-# Run with verbose output
+# Verbose output / تفاصيل أكثر
 opal file.op --verbose
 
-# Interactive REPL
+# Interactive REPL / واجهة تفاعلية
 opal --repl
 
-# Show version
+# Version / الإصدار
 opal --version
 
-# Show help
+# Help / المساعدة
 opal --help
 ```
 
 ---
 
-## File Extension / امتداد الملف
+## Examples / أمثلة
 
-Opal files use the `.op` extension:
-- `hello.op`
-- `math_demo.op`
-- `arabic_demo.op`
+See the `examples/` directory for complete examples:
+- `hello.op` - Basic hello world
+- `math_demo.op` - Math library
+- `functions.op` - Functions and recursion
+- `conditionals.op` - Conditionals and loops
+- `lists_strings.op` - Lists and strings
+- `arabic_demo.op` - Full Arabic example
+- `import_demo.op` - Import system
+- `oop_demo.op` - Object-oriented programming (NEW!)
+- `arabic_oop_demo.op` - Arabic OOP (NEW!)
+- `advanced_features.op` - All advanced features (NEW!)
+- `web_json_demo.op` - Web and JSON (NEW!)
+- `advanced_demo.op` - Complete showcase
 
 ---
 
@@ -389,30 +506,32 @@ Opal files use the `.op` extension:
 ```
 Opal-/
 ├── opal/
-│   ├── __init__.py        # Package init
+│   ├── __init__.py
 │   ├── tokens.py          # Token definitions
-│   ├── lexer.py           # Lexer (tokenizer)
-│   ├── ast_nodes.py       # AST node definitions
+│   ├── lexer.py           # Lexer
+│   ├── ast_nodes.py       # AST nodes
 │   ├── parser.py          # Parser
 │   ├── environment.py     # Variable scopes
-│   ├── interpreter.py     # Interpreter (executor)
+│   ├── interpreter.py     # Interpreter
 │   ├── main.py            # CLI entry point
-│   └── stdlib/            # Standard library
+│   └── stdlib/
 │       ├── __init__.py    # Library loader
 │       ├── math_lib.py    # Math functions
 │       ├── string_lib.py  # String functions
 │       ├── list_lib.py    # List functions
 │       ├── io_lib.py      # I/O functions
-│       └── type_lib.py    # Type functions
+│       ├── type_lib.py    # Type functions
+│       ├── json_lib.py    # JSON (NEW!)
+│       ├── http_lib.py    # HTTP (NEW!)
+│       ├── file_lib.py    # File system (NEW!)
+│       ├── time_lib.py    # Time (NEW!)
+│       └── system_lib.py  # System (NEW!)
 ├── examples/              # Example programs
-│   ├── hello.op
-│   ├── math_demo.op
-│   ├── functions.op
-│   ├── conditionals.op
-│   ├── lists_strings.op
-│   ├── arabic_demo.op
-│   └── import_demo.op
-├── setup.py               # Installation script
+├── install.sh             # Linux/macOS installer
+├── install_termux.sh      # Termux installer
+├── install_windows.bat    # Windows installer
+├── install_universal.sh   # Universal installer
+├── setup.py               # Python package setup
 ├── README.md              # This file
 └── opal                   # CLI launcher
 ```
@@ -429,7 +548,7 @@ MIT License - Free to use, modify, and distribute.
 
 ## شكر وتقدير
 
-لغة أوبال مصممة لتكون سهلة وقوية في نفس الوقت. شكراً لاستخدامك أوبال!
+لغة أوبال v2.0 - أقوى وأسرع وأسهل من أي وقت مضى!
 
 **استمتع بالبرمجة! 🚀**
 

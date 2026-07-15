@@ -10,22 +10,45 @@ from . import string_lib
 from . import io_lib
 from . import list_lib
 from . import type_lib
+from . import json_lib
+from . import http_lib
+from . import time_lib
+from . import system_lib
+from . import file_lib
 
 
 # Registry of available modules / سجل الوحدات المتاحة
 MODULES = {
+    # English module names
     'math': math_lib.get_module,
-    'رياضيات': math_lib.get_module,
     'strings': string_lib.get_module,
-    'نصوص': string_lib.get_module,
     'string': string_lib.get_module,
     'io': io_lib.get_module,
-    'إدخال_إخراج': io_lib.get_module,
     'lists': list_lib.get_module,
-    'قوائم': list_lib.get_module,
     'list': list_lib.get_module,
     'types': type_lib.get_module,
+    'json': json_lib.get_module,
+    'http': http_lib.get_module,
+    'web': http_lib.get_module,
+    'time': time_lib.get_module,
+    'system': system_lib.get_module,
+    'os': system_lib.get_module,
+    'file': file_lib.get_module,
+    'files': file_lib.get_module,
+    'filesystem': file_lib.get_module,
+    'fs': file_lib.get_module,
+
+    # Arabic module names
+    'رياضيات': math_lib.get_module,
+    'نصوص': string_lib.get_module,
+    'إدخال_إخراج': io_lib.get_module,
+    'قوائم': list_lib.get_module,
     'أنواع': type_lib.get_module,
+    'وقت': time_lib.get_module,
+    'تاريخ': time_lib.get_module,
+    'نظام': system_lib.get_module,
+    'ملفات': file_lib.get_module,
+    'ملف': file_lib.get_module,
 }
 
 

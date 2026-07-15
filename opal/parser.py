@@ -12,10 +12,12 @@ from .tokens import TokenType, Token
 from .ast_nodes import (
     NumberLiteral, StringLiteral, BooleanLiteral, NullLiteral,
     ListLiteral, Identifier, BinaryOp, UnaryOp, Assignment,
-    Call, IndexAccess, MemberAccess, Range,
+    Call, IndexAccess, MemberAccess, Range, DictLiteral, LambdaExpr,
+    ThisExpr, NewExpr, TernaryExpr, CompoundAssign,
     VarDecl, EchoStmt, ExprStmt, Block, IfStmt, WhileStmt, ForStmt,
     FuncDecl, ReturnStmt, BreakStmt, ContinueStmt,
-    ImportStmt, FromImportStmt, Program
+    ImportStmt, FromImportStmt, Program, TryStmt, ThrowStmt,
+    ClassDecl, SwitchStmt, DoUntilStmt
 )
 
 
@@ -126,9 +128,17 @@ class Parser:
         if self.check(TokenType.FOR):
             return self.for_statement()
 
+        # Do-until loop / حلقة افعل-حتى
+        if self.check(TokenType.DO):
+            return self.do_until_statement()
+
         # Function declaration / تعريف دالة
         if self.check(TokenType.FUNCTION):
             return self.func_declaration()
+
+        # Class declaration / تعريف صف
+        if self.check(TokenType.CLASS):
+            return self.class_declaration()
 
         # Return / إرجاع
         if self.check(TokenType.RETURN):
@@ -153,6 +163,18 @@ class Parser:
         # From import / استيراد محدد
         if self.check(TokenType.FROM):
             return self.from_import_statement()
+
+        # Try/catch / حاول/امسك
+        if self.check(TokenType.TRY):
+            return self.try_statement()
+
+        # Throw / رمي
+        if self.check(TokenType.THROW):
+            return self.throw_statement()
+
+        # Switch / بدل
+        if self.check(TokenType.SWITCH):
+            return self.switch_statement()
 
         # Otherwise it's an expression statement / وإلا فهي جملة تعبير
         return self.expression_statement()
@@ -303,6 +325,152 @@ class Parser:
         self.consume_terminator()
         return ExprStmt(expr)
 
+    def try_statement(self):
+        """try { } catch (e) { } finally { } / حاول {} أمسك (هـ) {} أخيرا {}"""
+        self.advance()  # consume try
+        self.expect(TokenType.LBRACE, "Expected '{' after try")
+        try_block = self.block()
+
+        catch_param = None
+        catch_block = None
+        finally_block = None
+
+        self.skip_newlines()
+
+        if self.check(TokenType.CATCH):
+            self.advance()
+            if self.check(TokenType.LPAREN):
+                self.advance()
+                catch_param = self.expect(TokenType.IDENTIFIER,
+                                          "Expected error variable name").value
+                self.expect(TokenType.RPAREN, "Expected ')' after catch variable")
+            self.expect(TokenType.LBRACE, "Expected '{' after catch")
+            catch_block = self.block()
+
+        self.skip_newlines()
+
+        if self.check(TokenType.FINALLY):
+            self.advance()
+            self.expect(TokenType.LBRACE, "Expected '{' after finally")
+            finally_block = self.block()
+
+        return TryStmt(try_block, catch_param, catch_block, finally_block)
+
+    def throw_statement(self):
+        """throw expr / ارمي قيمة"""
+        self.advance()  # consume throw
+        value = self.expression()
+        self.consume_terminator()
+        return ThrowStmt(value)
+
+    def class_declaration(self):
+        """class Name { methods } / صف اسم { دوال }"""
+        self.advance()  # consume class
+        name = self.expect(TokenType.IDENTIFIER,
+                           "Expected class name").value
+
+        parent = None
+        # Optional inheritance: class Name extends Parent / صف اسم يرث أب
+        if self.match(TokenType.COLON):
+            parent = self.expect(TokenType.IDENTIFIER,
+                                 "Expected parent class name").value
+
+        self.expect(TokenType.LBRACE, "Expected '{' after class name")
+
+        methods = []
+        self.skip_newlines()
+        while not self.check(TokenType.RBRACE) and not self.is_at_end():
+            self.skip_newlines()
+            if self.check(TokenType.RBRACE):
+                break
+            # Each method is a function declaration
+            if self.check(TokenType.FUNCTION):
+                methods.append(self.func_declaration())
+            else:
+                # Allow method without 'function' keyword
+                method_name = self.expect(TokenType.IDENTIFIER,
+                                          "Expected method name").value
+                self.expect(TokenType.LPAREN, "Expected '('")
+                params = []
+                if not self.check(TokenType.RPAREN):
+                    params.append(self.expect(TokenType.IDENTIFIER).value)
+                    while self.match(TokenType.COMMA):
+                        params.append(self.expect(TokenType.IDENTIFIER).value)
+                self.expect(TokenType.RPAREN, "Expected ')'")
+                self.expect(TokenType.LBRACE, "Expected '{'")
+                body = self.block()
+                methods.append(FuncDecl(method_name, params, body))
+            self.skip_newlines()
+
+        self.expect(TokenType.RBRACE, "Expected '}' to close class")
+        return ClassDecl(name, methods, parent)
+
+    def switch_statement(self):
+        """switch (expr) { case v: { } default: { } } / بدل (تعبير) {}"""
+        self.advance()  # consume switch
+        self.expect(TokenType.LPAREN, "Expected '(' after switch")
+        expr = self.expression()
+        self.expect(TokenType.RPAREN, "Expected ')' after switch expression")
+        self.expect(TokenType.LBRACE, "Expected '{' for switch body")
+
+        cases = []
+        default_block = None
+        self.skip_newlines()
+
+        while not self.check(TokenType.RBRACE) and not self.is_at_end():
+            self.skip_newlines()
+            if self.check(TokenType.RBRACE):
+                break
+
+            if self.check(TokenType.CASE):
+                self.advance()
+                case_value = self.expression()
+                self.expect(TokenType.COLON, "Expected ':' after case value")
+                case_block = self.block_or_stmts()
+                cases.append((case_value, case_block))
+            elif self.check(TokenType.DEFAULT):
+                self.advance()
+                self.expect(TokenType.COLON, "Expected ':' after default")
+                default_block = self.block_or_stmts()
+            else:
+                raise ParseError("Expected 'case' or 'default' in switch",
+                                 self.peek().line, self.peek().column)
+            self.skip_newlines()
+
+        self.expect(TokenType.RBRACE, "Expected '}' to close switch")
+        return SwitchStmt(expr, cases, default_block)
+
+    def block_or_stmts(self):
+        """Parse either a block { } or statements until next case/default/}"""
+        if self.check(TokenType.LBRACE):
+            self.advance()
+            return self.block()
+        # Read statements until next case/default/}
+        statements = []
+        while not self.check(TokenType.CASE) and not self.check(TokenType.DEFAULT) \
+              and not self.check(TokenType.RBRACE) and not self.is_at_end():
+            self.skip_newlines()
+            if self.check(TokenType.CASE) or self.check(TokenType.DEFAULT) \
+               or self.check(TokenType.RBRACE):
+                break
+            stmt = self.statement()
+            if stmt is not None:
+                statements.append(stmt)
+            self.skip_newlines()
+        return Block(statements)
+
+    def do_until_statement(self):
+        """do { } until (cond) / افعل {} حتى ()"""
+        self.advance()  # consume do
+        self.expect(TokenType.LBRACE, "Expected '{' after do")
+        body = self.block()
+        self.expect(TokenType.UNTIL, "Expected 'until' after do block")
+        self.expect(TokenType.LPAREN, "Expected '(' after until")
+        condition = self.expression()
+        self.expect(TokenType.RPAREN, "Expected ')' after until condition")
+        self.consume_terminator()
+        return DoUntilStmt(body, condition)
+
     def block(self):
         """{ statements } / كتلة كود"""
         statements = []
@@ -332,21 +500,35 @@ class Parser:
 
     def expression(self):
         """التعبير الرئيسي / Main expression entry point"""
-        return self.assignment_expr()
+        return self.ternary_expr()
+
+    def ternary_expr(self):
+        """cond ? a : b / شرط ? أ : ب"""
+        cond = self.assignment_expr()
+        if self.check(TokenType.QUESTION):
+            self.advance()
+            then_expr = self.ternary_expr()
+            self.expect(TokenType.COLON, "Expected ':' in ternary expression")
+            else_expr = self.ternary_expr()
+            return TernaryExpr(cond, then_expr, else_expr)
+        return cond
 
     def assignment_expr(self):
         """x = value / إسناد"""
         left = self.or_expr()
 
+        # Regular assignment / إسناد عادي
         if self.check(TokenType.ASSIGN):
             self.advance()
             right = self.assignment_expr()
+            return Assignment(left, right)
 
-            if not isinstance(left, Identifier):
-                raise ParseError("Invalid assignment target",
-                                 self.peek().line, self.peek().column)
-
-            return Assignment(left.name, right)
+        # Compound assignments / إسناد مركب
+        if self.check(TokenType.PLUS_ASSIGN) or self.check(TokenType.MINUS_ASSIGN) \
+           or self.check(TokenType.STAR_ASSIGN) or self.check(TokenType.SLASH_ASSIGN):
+            op = self.advance()
+            right = self.assignment_expr()
+            return CompoundAssign(left, op, right)
 
         return left
 
@@ -515,6 +697,29 @@ class Parser:
             token = self.advance()
             return NullLiteral(token.line, token.column)
 
+        # this / هذا
+        if self.check(TokenType.THIS):
+            token = self.advance()
+            return ThisExpr(token.line, token.column)
+
+        # Lambda / fn(params) -> expr | { block } / دالة مجهولة
+        if self.check(TokenType.LAMBDA):
+            return self.lambda_expr()
+
+        # new ClassName(args) / جديد اسم الصف(وسائط)
+        if self.check(TokenType.NEW):
+            self.advance()
+            class_name = self.expect(TokenType.IDENTIFIER,
+                                     "Expected class name after 'new'").value
+            self.expect(TokenType.LPAREN, "Expected '(' after class name")
+            args = []
+            if not self.check(TokenType.RPAREN):
+                args.append(self.expression())
+                while self.match(TokenType.COMMA):
+                    args.append(self.expression())
+            self.expect(TokenType.RPAREN, "Expected ')' after arguments")
+            return NewExpr(class_name, args)
+
         # Identifier / معرف
         if self.check(TokenType.IDENTIFIER):
             token = self.advance()
@@ -541,8 +746,64 @@ class Parser:
             self.expect(TokenType.RBRACKET, "Expected ']' after list elements")
             return ListLiteral(elements)
 
+        # Dict literal / قاموس {key: value, ...}
+        # Must be careful: { could start a block. In expression context, treat as dict.
+        if self.check(TokenType.LBRACE):
+            return self.dict_literal()
+
         token = self.peek()
         raise ParseError(
             f"Unexpected token: {token.type.name} ('{token.value}')",
             token.line, token.column
         )
+
+    def lambda_expr(self):
+        """fn(params) -> expr or { block } / دالة مجهولة"""
+        self.advance()  # consume fn/lambda
+
+        self.expect(TokenType.LPAREN, "Expected '(' after lambda")
+        params = []
+        if not self.check(TokenType.RPAREN):
+            params.append(self.expect(TokenType.IDENTIFIER, "Expected parameter").value)
+            while self.match(TokenType.COMMA):
+                params.append(self.expect(TokenType.IDENTIFIER, "Expected parameter").value)
+        self.expect(TokenType.RPAREN, "Expected ')' after lambda params")
+
+        # Optional arrow / السهم الاختياري
+        if self.check(TokenType.ARROW):
+            self.advance()
+
+        # Body: either expression or block
+        if self.check(TokenType.LBRACE):
+            self.advance()
+            body = self.block()
+        else:
+            body = Block([ReturnStmt(self.expression())])
+
+        return LambdaExpr(params, body)
+
+    def dict_literal(self):
+        """{key: value, key2: value2} / قاموس"""
+        self.advance()  # consume {
+        pairs = []
+        self.skip_newlines()
+
+        if not self.check(TokenType.RBRACE):
+            # Parse first pair / أول زوج
+            key = self.expression()
+            self.expect(TokenType.COLON, "Expected ':' after dict key")
+            value = self.expression()
+            pairs.append((key, value))
+
+            while self.match(TokenType.COMMA):
+                self.skip_newlines()
+                if self.check(TokenType.RBRACE):
+                    break
+                key = self.expression()
+                self.expect(TokenType.COLON, "Expected ':' after dict key")
+                value = self.expression()
+                pairs.append((key, value))
+
+        self.skip_newlines()
+        self.expect(TokenType.RBRACE, "Expected '}' to close dict")
+        return DictLiteral(pairs)
