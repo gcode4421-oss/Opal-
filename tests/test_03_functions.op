@@ -1,0 +1,38 @@
+// === Phase 2 Test: Functions and Recursion ===
+function add(a, b) {
+    return a + b
+}
+echo "5+3 =", add(5, 3)
+
+// Recursive
+function factorial(n) {
+    if n <= 1 { return 1 }
+    return n * factorial(n - 1)
+}
+echo "5! =", factorial(5)
+
+// Closures
+function make_counter() {
+    var count = 0
+    function increment() {
+        count += 1
+        return count
+    }
+    return increment
+}
+
+var counter = make_counter
+echo "Counter test:"
+
+// Arabic function
+دالة مضروب(ن) {
+    اذا ن <= 1 { ارجع 1 }
+    ارجع ن * مضروب(ن - 1)
+}
+اطبع "مضروب 4 =", مضروب(4)
+
+// Higher-order function
+function apply(func, x) {
+    return func(x)
+}
+echo "apply(double, 7) =", apply(fn(x) -> x * 2, 7)

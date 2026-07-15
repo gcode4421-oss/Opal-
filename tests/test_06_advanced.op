@@ -1,0 +1,58 @@
+// === Phase 2 Test: Lambda, Dict, Switch, Ternary, Compound Assignment, Do-Until ===
+
+// Lambda
+var double = fn(x) -> x * 2
+echo "Double 5:", double(5)
+
+var square = fn(x) {
+    return x * x
+}
+echo "Square 4:", square(4)
+
+// Dict
+var person = {"name": "Alice", "age": 30}
+echo "Name:", person["name"]
+echo "Age:", person["age"]
+
+person["age"] = 31
+person["city"] = "Cairo"
+echo "Updated age:", person["age"]
+echo "City:", person["city"]
+
+// Switch
+var day = 3
+switch (day) {
+    case 1: { echo "Monday" }
+    case 2: { echo "Tuesday" }
+    case 3: { echo "Wednesday" }
+    case 4: { echo "Thursday" }
+    default: { echo "Other" }
+}
+
+// Ternary
+var age = 20
+echo "Status:", age >= 18 ? "Adult" : "Minor"
+
+// Compound assignment
+var x = 10
+x += 5
+echo "After += 5:", x
+x -= 3
+echo "After -= 3:", x
+x *= 2
+echo "After *= 2:", x
+x /= 4
+echo "After /= 4:", x
+
+// Do-Until
+var i = 0
+do {
+    echo "do-until i =", i
+    i += 1
+} until (i >= 3)
+echo "Final i:", i
+
+// Arabic ternary-like with if
+متغير حرارة = 30
+متغير حالة_الطقس = "حار"
+اطبع "الطقس:", حالة_الطقس

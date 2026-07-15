@@ -1,0 +1,20 @@
+// === Phase 2 Test: Import System ===
+
+// Full import
+import math
+echo "Math pi:", pi
+
+// Selective import
+from strings import upper, lower, length
+echo "Upper:", upper("test")
+echo "Lower:", lower("TEST")
+echo "Length:", length("test")
+
+// Arabic module names
+استورد رياضيات
+echo "Arabic math sqrt(9):", الجذر(9)
+
+من قوائم استورد رتب, مجموع
+متغير أرقام = [5, 2, 8, 1]
+اطبع "مرتبة:", رتب(أرقام)
+اطبع "المجموع:", مجموع(أرقام)

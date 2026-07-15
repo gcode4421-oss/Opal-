@@ -1,0 +1,65 @@
+// === Phase 2 Test: Standard Libraries ===
+
+// Math
+import math
+echo "Pi:", pi
+echo "Sqrt(16):", sqrt(16)
+echo "Power(2,8):", power(2, 8)
+echo "Abs(-5):", abs(-5)
+
+// Strings
+import strings
+echo "Upper:", upper("hello")
+echo "Length:", length("Opal")
+echo "Reverse:", reverse("abc")
+echo "Contains:", contains("hello world", "world")
+
+// Lists
+import lists
+var nums = [3, 1, 4, 1, 5, 9, 2, 6]
+echo "Sorted:", sort(nums)
+echo "Sum:", sum(nums)
+echo "Max:", max(nums)
+echo "Min:", min(nums)
+echo "Reverse:", reverse(nums)
+echo "Length:", length(nums)
+
+// Types
+import types
+echo "is_number(42):", is_number(42)
+echo "is_string('hi'):", is_string("hi")
+echo "is_list([1,2]):", is_list([1, 2])
+echo "type_of(3.14):", type_of(3.14)
+
+// JSON
+import json
+var data = {"name": "Opal", "version": 2}
+var s = stringify(data)
+echo "JSON:", s
+var back = parse(s)
+echo "Parsed name:", back["name"]
+
+// File I/O
+import file
+write("/tmp/opal_test.txt", "Hello File!")
+echo "File content:", read("/tmp/opal_test.txt")
+echo "File exists:", exists("/tmp/opal_test.txt")
+echo "File size:", size("/tmp/opal_test.txt")
+
+// Time
+import time
+echo "Timestamp:", now()
+echo "Year:", year()
+echo "Date:", date()
+
+// System
+import system
+echo "OS:", os()
+echo "CWD:", cwd()
+
+// Low-level
+import lowlevel
+echo "int8(100):", int8(100)
+echo "uint8(255):", uint8(255)
+echo "bit_and(12,10):", bit_and(12, 10)
+echo "sizeof(int32):", sizeof("int32")

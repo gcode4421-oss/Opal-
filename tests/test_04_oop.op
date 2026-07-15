@@ -1,0 +1,54 @@
+// === Phase 2 Test: OOP (Classes and Inheritance) ===
+
+class Animal {
+    function init(name, sound) {
+        this.name = name
+        this.sound = sound
+    }
+    
+    function speak() {
+        return this.name + " says " + this.sound
+    }
+}
+
+class Dog : Animal {
+    function init(name, breed) {
+        this.name = name
+        this.sound = "Woof"
+        this.breed = breed
+    }
+    
+    function fetch() {
+        return this.name + " fetches the ball"
+    }
+}
+
+var dog = new Dog("Rex", "Labrador")
+echo dog.speak()
+echo dog.fetch()
+
+// Test that inherited method works
+echo "Dog name:", dog.name
+echo "Dog sound:", dog.sound
+
+// Arabic class
+صف عداد {
+    دالة init() {
+        هذا.قيمة = 0
+    }
+    
+    دالة زيادة() {
+        هذا.قيمة += 1
+        ارجع هذا.قيمة
+    }
+    
+    دالة احصل() {
+        ارجع هذا.قيمة
+    }
+}
+
+متغير عدادي = جديد عداد()
+عدادي.زيادة()
+عدادي.زيادة()
+عدادي.زيادة()
+اطبع "القيمة:", عدادي.احصل()

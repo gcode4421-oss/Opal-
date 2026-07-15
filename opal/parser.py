@@ -341,8 +341,13 @@ class Parser:
             self.advance()
             if self.check(TokenType.LPAREN):
                 self.advance()
-                catch_param = self.expect(TokenType.IDENTIFIER,
-                                          "Expected error variable name").value
+                # Allow identifier OR certain keywords that may be used as error variable names
+                # (e.g. خطأ is also a FALSE keyword in Arabic, but should work as catch var)
+                if self.check(TokenType.IDENTIFIER) or self.check(TokenType.FALSE) or self.check(TokenType.TRUE) or self.check(TokenType.NULL):
+                    catch_param = self.advance().value
+                else:
+                    raise ParseError("Expected error variable name",
+                                     self.peek().line, self.peek().column)
                 self.expect(TokenType.RPAREN, "Expected ')' after catch variable")
             self.expect(TokenType.LBRACE, "Expected '{' after catch")
             catch_block = self.block()

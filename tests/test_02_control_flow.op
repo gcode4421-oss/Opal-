@@ -1,0 +1,63 @@
+// === Phase 2 Test: Control Flow ===
+// if/elif/else
+var score = 75
+if score >= 90 {
+    echo "A"
+} elif score >= 80 {
+    echo "B"
+} elif score >= 70 {
+    echo "C"
+} else {
+    echo "F"
+}
+
+// while
+var i = 0
+var sum = 0
+while i < 5 {
+    sum += i
+    i += 1
+}
+echo "Sum 0-4:", sum
+
+// for with range
+var product = 1
+for j in 1..5 {
+    product *= j
+}
+echo "5! =", product
+
+// for over list
+var fruits = ["apple", "banana", "cherry"]
+for f in fruits {
+    echo "-", f
+}
+
+// break
+for k in 1..100 {
+    if k > 5 { break }
+    echo "k =", k
+}
+
+// continue
+var evens = []
+for n in 1..10 {
+    if n % 2 != 0 { continue }
+    evens.push(n)
+}
+echo "Evens:", evens
+
+// Arabic conditionals
+متغير درجة = 85
+اذا درجة >= 50 {
+    اطبع "ناجح"
+} والا {
+    اطبع "راسب"
+}
+
+// Arabic while
+متغير س = 3
+بينما س > 0 {
+    اطبع "عد:", س
+    س -= 1
+}

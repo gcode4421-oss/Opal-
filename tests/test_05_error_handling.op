@@ -1,0 +1,52 @@
+// === Phase 2 Test: Error Handling ===
+
+// try/catch
+try {
+    var x = 10
+    var y = 0
+    var result = x / y
+    echo "This should not print"
+} catch (e) {
+    echo "Caught division error"
+}
+
+// throw custom
+function check_age(age) {
+    if age < 18 {
+        throw "Underage: " + age
+    }
+    return "OK"
+}
+
+try {
+    check_age(15)
+} catch (err) {
+    echo "Caught:", err
+}
+
+// try/catch/finally
+try {
+    echo "In try"
+    throw "test"
+} catch (e) {
+    echo "In catch:", e
+} finally {
+    echo "In finally"
+}
+
+// No error case
+try {
+    var ok = check_age(25)
+    echo "Age check:", ok
+} catch (e) {
+    echo "Should not catch"
+}
+
+// Arabic try/catch
+// Note: 'خطأ' is also a boolean keyword (false), so use a different variable name
+// ملاحظة: 'خطأ' هي أيضاً كلمة مفتاحية (false)، لذا نستخدم اسم متغير مختلف
+حاول {
+    قذف "خطأ عربي"
+} أمسك (الخطأ) {
+    اطبع "تم الإمساك:", الخطأ
+}

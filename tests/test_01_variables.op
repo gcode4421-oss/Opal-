@@ -1,0 +1,12 @@
+// === Phase 2 Test: Variables and Constants ===
+var x = 10
+const PI = 3.14159
+echo "x =", x
+echo "PI =", PI
+echo "Type test:", typeof(x), typeof(PI)
+
+// Arabic variables
+متغير الاسم = "أوبال"
+ثابت الإصدار = "2.1"
+اطبع "الاسم:", الاسم
+اطبع "الإصدار:", الإصدار
