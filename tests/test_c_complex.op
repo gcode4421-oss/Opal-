@@ -1,0 +1,68 @@
+// Complex test for C transpiler
+// اختبار معقد لمولّد C
+
+function factorial(n) {
+    if n <= 1 {
+        return 1
+    }
+    return n * factorial(n - 1)
+}
+
+function fibonacci(n) {
+    if n <= 1 {
+        return n
+    }
+    return fibonacci(n - 1) + fibonacci(n - 2)
+}
+
+function is_even(n) {
+    return n % 2 == 0
+}
+
+// Variables
+var x = 10
+var y = 20
+echo "x =", x
+echo "y =", y
+echo "Sum:", x + y
+echo "Product:", x * y
+
+// Functions
+echo "Factorial 5:", factorial(5)
+echo "Fibonacci 10:", fibonacci(10)
+
+// Conditional
+if x > 5 {
+    echo "x is greater than 5"
+} else {
+    echo "x is 5 or less"
+}
+
+// Loop
+echo "Counting:"
+for i in 1..5 {
+    echo "  i =", i
+}
+
+// While loop
+var count = 3
+echo "While loop:"
+while count > 0 {
+    echo "  count =", count
+    count -= 1
+}
+
+// String concatenation
+var name = "Opal"
+var greeting = "Hello, " + name + "!"
+echo greeting
+
+// Ternary
+var status = x >= 10 ? "big" : "small"
+echo "Status:", status
+
+// Multiple operations
+var result = (x + y) * 2 - 5
+echo "Complex expression:", result
+
+echo "Done!"
