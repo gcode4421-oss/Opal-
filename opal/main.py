@@ -178,14 +178,20 @@ Usage / الاستخدام:
     opal <file.op> --compile-c  تحويل إلى C / Transpile to C code
     opal <file.op> --compile-c -o out.c  تحديد ملف الإخراج
     opal --repl                 واجهة تفاعلية / Start interactive REPL
-    opal --version              عرض الإصدار / Show version
+    opal --version              عرض الإصدار مع فحص التحديثات / Show version + check updates
+    opal version                نفس الأمر / Same as --version
+    opal up                     التحقق من التحديثات / Check for updates
+    opal update                 تثبيت أحدث إصدار / Install latest version
     opal --help                 عرض هذه المساعدة / Show this help
+    opal --no-update-check      تخطي فحص التحديث التلقائي / Skip auto update check
 
 Examples / أمثلة:
     opal hello.op
     opal examples/math_demo.op
     opal --repl
     opal program.op --compile-c
+    opal up                     فحص التحديثات
+    opal update                 تحديث اللغة
 
 Features / المميزات:
     ✓ Support for Arabic and English keywords
@@ -227,9 +233,24 @@ def main():
         if arg == '--help' or arg == '-h':
             show_help()
             sys.exit(0)
-        elif arg == '--version' or arg == '-v':
-            print(f"Opal {OPAL_VERSION}")
+        elif arg == '--version' or arg == '-v' or arg == 'version':
+            # Show version info with update check / عرض معلومات الإصدار مع فحص التحديث
+            from opal.updater import show_version_info
+            show_version_info()
             sys.exit(0)
+        elif arg == 'up' or arg == 'update-check' or arg == '--check-update':
+            # Check for updates / التحقق من التحديثات
+            from opal.updater import check_for_updates
+            check_for_updates()
+            sys.exit(0)
+        elif arg == 'update' or arg == 'upgrade':
+            # Perform update / تنفيذ التحديث
+            from opal.updater import perform_update
+            perform_update()
+            sys.exit(0)
+        elif arg == '--no-update-check':
+            # Skip auto update check / تخطي الفحص التلقائي
+            pass  # Handled below
         elif arg == '--repl' or arg == '-r':
             use_repl = True
         elif arg == '--verbose':
@@ -264,6 +285,15 @@ def main():
     elif color_mode == 'never':
         import os
         os.environ['NO_COLOR'] = '1'
+
+    # Auto update check (silent) - skip if disabled
+    # فحص تلقائي للتحديثات (صامت) - يتخطى إذا كان معطلاً
+    if '--no-update-check' not in args:
+        try:
+            from opal.updater import auto_check_update
+            auto_check_update()
+        except Exception:
+            pass  # Silent fail / فشل صامت
 
     if use_repl:
         repl()
