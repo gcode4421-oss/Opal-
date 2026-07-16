@@ -1,44 +1,121 @@
 #!/usr/bin/env python3
-"""Opal Language CLI - bin entry point / نقطة دخول واجهة سطر الأوامر
+# -*- coding: utf-8 -*-
+"""
+Opal Language - Universal CLI Wrapper
+مشغل لغة أوبال الشامل
 
-This file should be symlinked or copied to /usr/local/bin/opal or ~/.local/bin/opal
-يجب ربط أو نسخ هذا الملف إلى /usr/local/bin/opal أو ~/.local/bin/opal
-
-Usage / الاستخدام:
-    ./bin/opal file.op
-    ./bin/opal --repl
+This wrapper finds the opal package wherever it's installed
+هذا المشغل يجد حزمة opal أينما كانت مثبتة
 """
 
 import sys
 import os
 
-# Add the directory containing this file to Python path
-# أضف المجلد الذي يحتوي هذا الملف إلى مسار Python
-_SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-_PROJECT_DIR = os.path.dirname(_SCRIPT_DIR)  # parent of bin/
 
-# Look for opal package in multiple locations
-# ابحث عن حزمة opal في مواقع متعددة
-search_paths = [
-    _PROJECT_DIR,           # When run from project source
-    _SCRIPT_DIR,            # When bin/ is the project root
-    os.path.join(_PROJECT_DIR, 'opal'),  # If opal is in parent/opal
-]
+def find_opal_main():
+    """ابحث عن opal.main في مسارات متعددة / Find opal.main in multiple paths"""
+    # Method 1: Try direct import (works if opal is in site-packages)
+    # الطريقة 1: استيراد مباشر (يعمل إذا كانت opal في site-packages)
+    try:
+        from opal.main import main
+        return main
+    except ImportError:
+        pass
 
-for path in search_paths:
-    if path not in sys.path:
-        sys.path.insert(0, path)
+    # Method 2: Search common installation locations
+    # الطريقة 2: البحث في مواقع التثبيت الشائعة
+    search_paths = [
+        # User site-packages
+        os.path.expanduser('~/.local/lib'),
+        # System site-packages (various Python versions)
+        '/usr/lib/python3/dist-packages',
+        '/usr/lib/python3/site-packages',
+        '/usr/local/lib/python3/dist-packages',
+        '/usr/local/lib/python3/site-packages',
+        # Termux locations
+        '/data/data/com.termux/files/usr/lib/python3.11/site-packages',
+        '/data/data/com.termux/files/usr/lib/python3.12/site-packages',
+        '/data/data/com.termux/files/usr/lib/python3.13/site-packages',
+        '/data/data/com.termux/files/usr/lib/python3.14/site-packages',
+        '/data/data/com.termux/files/usr/lib/python3.15/site-packages',
+        # Home opal installation (legacy)
+        os.path.expanduser('~/opal'),
+        os.path.expanduser('~/Opal-'),
+        # Virtual envs
+        os.path.expanduser('~/.venv/lib'),
+    ]
 
-# Try to import opal.main
-try:
-    from opal.main import main
-except ImportError:
-    # Fallback: try to find opal package
-    print("Error: Could not find the opal package.", file=sys.stderr)
-    print("خطأ: تعذر العثور على حزمة opal.", file=sys.stderr)
-    print(f"Searched in: {search_paths}", file=sys.stderr)
-    print("Please install with: pip install opal-lang", file=sys.stderr)
-    sys.exit(1)
+    # Find all python3.X site-packages directories
+    # البحث عن كل مجلدات site-packages لـ python3.X
+    for lib_dir in ['/usr/lib', '/usr/local/lib', os.path.expanduser('~/.local/lib'),
+                    '/data/data/com.termux/files/usr/lib']:
+        if os.path.isdir(lib_dir):
+            for entry in os.listdir(lib_dir):
+                if entry.startswith('python3'):
+                    sp = os.path.join(lib_dir, entry, 'site-packages')
+                    if os.path.isdir(sp) and sp not in search_paths:
+                        search_paths.append(sp)
+
+    # Add all paths to sys.path and try import
+    # إضافة كل المسارات إلى sys.path ومحاولة الاستيراد
+    for path in search_paths:
+        if path and os.path.isdir(path) and path not in sys.path:
+            sys.path.insert(0, path)
+            try:
+                from opal.main import main
+                return main
+            except ImportError:
+                continue
+
+    # Method 3: Try to find opal package anywhere
+    # الطريقة 3: محاولة العثور على حزمة opal في أي مكان
+    import importlib.util
+    for path in search_paths:
+        if not path or not os.path.isdir(path):
+            continue
+        # Look for opal directory
+        opal_dir = os.path.join(path, 'opal')
+        if os.path.isdir(opal_dir):
+            main_file = os.path.join(opal_dir, 'main.py')
+            if os.path.isfile(main_file):
+                try:
+                    spec = importlib.util.spec_from_file_location("opal.main", main_file)
+                    module = importlib.util.module_from_spec(spec)
+                    sys.modules['opal'] = type(sys)('opal')
+                    spec.loader.exec_module(module)
+                    return module.main
+                except Exception:
+                    continue
+
+    return None
+
+
+def main():
+    """نقطة الدخول الرئيسية / Main entry point"""
+    main_func = find_opal_main()
+
+    if main_func is None:
+        print("❌ Error: Opal language not found!", file=sys.stderr)
+        print("خطأ: لغة أوبال غير موجودة!", file=sys.stderr)
+        print("", file=sys.stderr)
+        print("To install Opal:", file=sys.stderr)
+        print("لتثبيت أوبال:", file=sys.stderr)
+        print("", file=sys.stderr)
+        print("  pip install opal-lang", file=sys.stderr)
+        print("  # أو / or:", file=sys.stderr)
+        print("  pip install git+https://github.com/gcode4421-oss/Opal-.git", file=sys.stderr)
+        print("", file=sys.stderr)
+        print("If already installed, the opal package may be in a location", file=sys.stderr)
+        print("not in Python's path. Try:", file=sys.stderr)
+        print("إذا كانت مثبتة، قد تكون الحزمة في موقع غير مسار بايثون. جرب:", file=sys.stderr)
+        print("", file=sys.stderr)
+        print("  python3 -m pip install --force-reinstall opal-lang", file=sys.stderr)
+        sys.exit(1)
+
+    # Run opal main
+    # تشغيل main الخاص بـ opal
+    sys.exit(main_func())
+
 
 if __name__ == '__main__':
     main()

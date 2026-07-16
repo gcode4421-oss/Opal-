@@ -116,10 +116,9 @@ $PYTHON_CMD -m pip install -e .
 USER_BIN="$HOME/.local/bin"
 mkdir -p "$USER_BIN"
 
-cat > "$USER_BIN/opal" << EOF
-#!/bin/bash
-exec $PYTHON_CMD "$INSTALL_DIR/opal/main.py" "\$@"
-EOF
+# Copy the universal wrapper from bin/opal
+# نسخ المشغل الشامل من bin/opal
+cp "$INSTALL_DIR/bin/opal" "$USER_BIN/opal"
 chmod +x "$USER_BIN/opal"
 
 # Try system-wide install / محاولة التثبيت على مستوى النظام

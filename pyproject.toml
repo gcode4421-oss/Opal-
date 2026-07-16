@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "opal-lang"
-version = "2.1.0"
+version = "2.1.1"
 description = "Opal - A powerful beginner-friendly programming language with Arabic and English support, colors, and C transpiler"
 readme = "README.md"
 requires-python = ">=3.8"
@@ -42,7 +42,8 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
-    "Programming Language :: Other",  # Opal itself
+    "Programming Language :: Python :: 3.14",
+    "Programming Language :: Other",
     "Topic :: Education",
     "Topic :: Software Development :: Interpreters",
     "Topic :: Software Development :: Compilers",
@@ -50,25 +51,24 @@ classifiers = [
     "Natural Language :: Arabic",
     "Natural Language :: English",
 ]
-dependencies = [
-    "arabic-reshaper>=3.0.0",
-    "python-bidi>=0.4.0",
-]
+# No hard dependencies - everything works with stdlib only!
+# لا تبعيات إجبارية - كل شيء يعمل بالمكتبة القياسية فقط!
+dependencies = []
 
 [project.optional-dependencies]
+# Optional Arabic text shaping (for advanced Arabic display)
+# تشكيل النص العربي (اختياري للعرض المتقدم)
+arabic = [
+    "arabic-reshaper>=3.0.0",
+]
 dev = [
     "pytest>=7.0",
     "pytest-cov>=4.0",
     "twine>=4.0",
     "build>=0.10",
 ]
-http = [
-    "requests>=2.28",
-]
 all = [
     "arabic-reshaper>=3.0.0",
-    "python-bidi>=0.4.0",
-    "requests>=2.28",
 ]
 
 [project.urls]
