@@ -1,0 +1,59 @@
+// ==========================================
+// Opal TUI Demo - ارسم واجهة حقيقية
+// ==========================================
+
+import tui
+import colors
+
+// Clear screen first / مسح الشاشة أولاً
+clear()
+
+// Draw a title banner / رسم لافتة عنوان
+banner("Opal Language v2.2.0", "big")
+
+// Draw boxes / رسم صناديق
+echo "Drawing boxes... / رسم صناديق..."
+box(2, 5, 40, 5, "single")
+print_at(4, 6, "Single line box")
+print_at(4, 8, "صندوق بخط واحد")
+
+box(50, 5, 30, 5, "double")
+print_at(52, 6, "Double line box")
+print_at(52, 8, "صندوق بخط مزدوج")
+
+box(2, 12, 40, 5, "rounded")
+print_at(4, 13, "Rounded box")
+print_at(4, 15, "صندوق مدور")
+
+// Draw progress bars / أشرطة التقدم
+echo ""
+echo "Progress bars / أشرطة التقدم:"
+for p in 0..10 {
+    var percent = p * 10
+    progress_bar(2, 20, 30, percent)
+    // Note: in real terminal, this updates in place
+}
+
+// Draw a table / رسم جدول
+echo ""
+echo "Table / جدول:"
+var headers = ["Name", "Age", "City"]
+var rows = [
+    ["Alice", "30", "Cairo"],
+    ["Bob", "25", "Dubai"],
+    ["Carol", "35", "Riyadh"]
+]
+table(headers, rows)
+
+// Center text / توسيط نص
+echo ""
+center_text(25, "Centered Text / نص موسّط")
+center_text(26, "Opal Language")
+
+// ASCII art / فن ASCII
+echo ""
+echo "ASCII Art / فن ASCII:"
+art("Opal")
+
+echo ""
+echo "✓ TUI demo complete! / اكتمل عرض الواجهة!"

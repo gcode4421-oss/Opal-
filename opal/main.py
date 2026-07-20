@@ -24,7 +24,7 @@ from opal.interpreter import Interpreter, OpalError
 
 
 # Version / الإصدار
-OPAL_VERSION = "2.1.1"
+OPAL_VERSION = "2.2.0"
 
 
 def run_file(filepath, verbose=False):
@@ -103,6 +103,38 @@ def run_source(source, filepath="<stdin>", verbose=False):
     finally:
         if filepath != "<stdin>":
             os.chdir(old_cwd)
+
+
+def run_with_vm(filepath, verbose=False):
+    """تشغيل ملف أوبال بالـ VM الخاص / Run Opal file with native VM"""
+    if not os.path.exists(filepath):
+        print(f"خطأ: الملف '{filepath}' غير موجود - Error: File '{filepath}' not found")
+        sys.exit(1)
+
+    try:
+        with open(filepath, 'r', encoding='utf-8') as f:
+            source = f.read()
+    except Exception as e:
+        print(f"خطأ في قراءة الملف - Error reading file: {e}")
+        sys.exit(1)
+
+    try:
+        from opal.vm import run_with_vm as vm_run
+
+        if verbose:
+            print("--- Running with Opal Bytecode VM ---")
+            print("--- التشغيل بـ VM الخاص بأوبال ---")
+
+        vm_run(source)
+
+    except (LexError, ParseError, OpalError) as e:
+        print(f"\n❌ {e}", file=sys.stderr)
+        sys.exit(1)
+    except Exception as e:
+        print(f"\n❌ خطأ غير متوقع (Unexpected Error): {e}", file=sys.stderr)
+        import traceback
+        traceback.print_exc()
+        sys.exit(1)
 
 
 def _show_error_context(source, filepath, line_num):
@@ -223,6 +255,7 @@ def main():
     verbose = False
     use_repl = False
     compile_c = False
+    use_vm = False
     output_path = None
     filepath = None
     color_mode = None  # None = auto, 'always', 'never'
@@ -257,6 +290,8 @@ def main():
             verbose = True
         elif arg == '--compile-c' or arg == '--cc':
             compile_c = True
+        elif arg == '--vm' or arg == '--bytecode':
+            use_vm = True
         elif arg == '--color':
             i += 1
             if i < len(args):
@@ -302,6 +337,9 @@ def main():
             # Compile to C / تحويل إلى C
             from opal.c_transpiler import compile_file
             compile_file(filepath, output_path)
+        elif use_vm:
+            # Run via Opal Bytecode VM / تشغيل عبر VM الخاص بأوبال
+            run_with_vm(filepath, verbose)
         else:
             run_file(filepath, verbose)
     else:

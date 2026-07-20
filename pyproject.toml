@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "opal-lang"
-version = "2.1.1"
+version = "2.2.0"
 description = "Opal - A powerful beginner-friendly programming language with Arabic and English support, colors, and C transpiler"
 readme = "README.md"
 requires-python = ">=3.8"

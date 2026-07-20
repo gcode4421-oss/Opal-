@@ -17,6 +17,8 @@ from . import system_lib
 from . import file_lib
 from . import lowlevel_lib
 from . import colors_lib
+from . import tui_lib
+from . import hardware_lib
 
 
 # Registry of available modules / سجل الوحدات المتاحة
@@ -48,6 +50,12 @@ MODULES = {
     'color': colors_lib.get_module,
     'terminal': colors_lib.get_module,
     'term': colors_lib.get_module,
+    'tui': tui_lib.get_module,
+    'ui': tui_lib.get_module,
+    'gui': tui_lib.get_module,
+    'hardware': hardware_lib.get_module,
+    'hw': hardware_lib.get_module,
+    'device': hardware_lib.get_module,
 
     # Arabic module names
     'رياضيات': math_lib.get_module,
@@ -65,6 +73,9 @@ MODULES = {
     'ألوان': colors_lib.get_module,
     'لون': colors_lib.get_module,
     'طرفية': colors_lib.get_module,
+    'واجهة': tui_lib.get_module,
+    'هاردوير': hardware_lib.get_module,
+    'جهاز': hardware_lib.get_module,
 }
 
 

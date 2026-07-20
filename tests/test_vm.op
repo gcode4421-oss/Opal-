@@ -1,0 +1,45 @@
+// === VM Test - تشغيل بالـ VM الخاص بأوبال ===
+
+function factorial(n) {
+    if n <= 1 {
+        return 1
+    }
+    return n * factorial(n - 1)
+}
+
+function fibonacci(n) {
+    if n <= 1 {
+        return n
+    }
+    return fibonacci(n - 1) + fibonacci(n - 2)
+}
+
+var x = 10
+var y = 20
+echo "x =", x
+echo "y =", y
+echo "Sum:", x + y
+echo "Product:", x * y
+
+echo "Factorial 5:", factorial(5)
+echo "Fibonacci 10:", fibonacci(10)
+
+if x > 5 {
+    echo "x is greater than 5"
+} else {
+    echo "x is 5 or less"
+}
+
+echo "Counting:"
+for i in 1..5 {
+    echo "  i =", i
+}
+
+var count = 3
+echo "While loop:"
+while count > 0 {
+    echo "  count =", count
+    count -= 1
+}
+
+echo "Done with VM!"

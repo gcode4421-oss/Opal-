@@ -312,9 +312,11 @@ def get_module():
         'BG_MAGENTA': BG_MAGENTA,
 
         # Terminal control / تحكم الطرفية
-        'CLEAR': CLEAR_SCREEN,
-        'clear': CLEAR_SCREEN,
-        'مسح': CLEAR_SCREEN,
+        'CLEAR': _clear_screen,
+        'clear_screen': _clear_screen,
+        'clear': _clear_screen,
+        'مسح': _clear_screen,
+        'امسح_الشاشة': _clear_screen,
         'CLEAR_LINE': CLEAR_LINE,
         'NEWLINE': NEWLINE,
         'TAB': TAB,

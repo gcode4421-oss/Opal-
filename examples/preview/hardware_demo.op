@@ -1,0 +1,107 @@
+// ==========================================
+// Opal Hardware Demo - اقرأ الهاردوير
+// ==========================================
+
+import hardware
+import colors
+
+echo "========================================="
+echo "  Hardware Information / معلومات الهاردوير"
+echo "========================================="
+echo ""
+
+// CPU info / معلومات المعالج
+echo "=== CPU / المعالج ==="
+var cpu = cpu_info()
+echo "Architecture:", cpu["architecture"]
+echo "Processor:", cpu["processor"]
+echo "Cores:", cpu["cores"]
+var model = cpu["model"]
+if model != null {
+    echo "Model:", model
+}
+echo ""
+
+// CPU usage / استخدام المعالج
+echo "CPU Usage:", cpu_percent(), "%"
+echo "CPU Frequency:", cpu_freq(), "MHz"
+echo ""
+
+// Memory / الذاكرة
+echo "=== Memory / الذاكرة ==="
+var mem = memory_info()
+echo "Total:", memory_total() / 1024 / 1024, "MB"
+echo "Used:", memory_used() / 1024 / 1024, "MB"
+echo "Free:", memory_free() / 1024 / 1024, "MB"
+echo "Usage:", memory_percent(), "%"
+echo ""
+
+// Disk / القرص
+echo "=== Disk / القرص ==="
+var disk = disk_usage("/")
+echo "Total:", disk["total"] / 1024 / 1024 / 1024, "GB"
+echo "Used:", disk["used"] / 1024 / 1024 / 1024, "GB"
+echo "Free:", disk["free"] / 1024 / 1024 / 1024, "GB"
+echo "Usage:", disk["percent"], "%"
+echo ""
+
+// Network / الشبكة
+echo "=== Network / الشبكة ==="
+echo "Hostname:", hostname()
+echo "IP Address:", ip_address()
+var mac = mac_address()
+if mac != "" {
+    echo "MAC Address:", mac
+}
+echo ""
+
+// Battery / البطارية
+echo "=== Battery / البطارية ==="
+var battery = battery_level()
+if battery >= 0 {
+    echo "Level:", battery, "%"
+    var status = battery_status()
+    var status_val = status["status"]
+    if status_val != null {
+        echo "Status:", status_val
+    }
+    echo "Charging:", is_charging() ? "Yes" : "No"
+} else {
+    echo "Battery info not available / معلومات البطارية غير متاحة"
+}
+echo ""
+
+// Temperature / الحرارة
+echo "=== Temperature / الحرارة ==="
+var temp = cpu_temp()
+if temp >= 0 {
+    echo "CPU Temperature:", temp, "°C"
+} else {
+    echo "Temperature not available / الحرارة غير متاحة"
+}
+echo ""
+
+// System uptime / وقت التشغيل
+echo "=== System / النظام ==="
+var up = uptime()
+var hours = up / 3600
+var minutes = (up % 3600) / 60
+echo "Uptime:", hours, "hours", minutes, "minutes"
+echo ""
+
+// USB devices / أجهزة USB
+echo "=== USB Devices / أجهزة USB ==="
+var usb = usb_devices()
+if usb.length > 0 {
+    for device in usb {
+        echo "-", device
+    }
+} else {
+    echo "No USB devices found / لا أجهزة USB"
+}
+echo ""
+
+echo "========================================="
+echo "✓ Hardware demo complete!"
+echo "اكتمل عرض الهاردوير!"
+echo "========================================="
