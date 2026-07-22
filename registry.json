@@ -1,0 +1,88 @@
+{
+  "name": "Opal Package Registry",
+  "version": "1.0.0",
+  "description": "Official Opal package registry / السجل الرسمي لحزم أوبال",
+  "updated": "2026-07-20",
+  "packages": [
+    {
+      "name": "utils",
+      "version": "1.0.0",
+      "description": "Utility functions for Opal / دوال مساعدة لأوبال",
+      "author": "Opal Team",
+      "license": "MIT",
+      "homepage": "https://github.com/gcode4421-oss/opal-packages/tree/main/packages/utils",
+      "download_url": "https://raw.githubusercontent.com/gcode4421-oss/opal-packages/main/packages/utils/utils.op",
+      "tags": ["utility", "helper", "tools"]
+    },
+    {
+      "name": "math-extra",
+      "version": "1.1.0",
+      "description": "Advanced math functions / دوال رياضية متقدمة",
+      "author": "Opal Team",
+      "license": "MIT",
+      "homepage": "https://github.com/gcode4421-oss/opal-packages/tree/main/packages/math-extra",
+      "download_url": "https://raw.githubusercontent.com/gcode4421-oss/opal-packages/main/packages/math-extra/math-extra.op",
+      "tags": ["math", "advanced", "statistics"]
+    },
+    {
+      "name": "string-utils",
+      "version": "1.0.0",
+      "description": "String manipulation utilities / أدوات معالجة النصوص",
+      "author": "Opal Team",
+      "license": "MIT",
+      "homepage": "https://github.com/gcode4421-oss/opal-packages/tree/main/packages/string-utils",
+      "download_url": "https://raw.githubusercontent.com/gcode4421-oss/opal-packages/main/packages/string-utils/string-utils.op",
+      "tags": ["string", "text", "manipulation"]
+    },
+    {
+      "name": "crypto",
+      "version": "0.9.0",
+      "description": "Cryptography functions / دوال التشفير",
+      "author": "Opal Team",
+      "license": "MIT",
+      "homepage": "https://github.com/gcode4421-oss/opal-packages/tree/main/packages/crypto",
+      "download_url": "https://raw.githubusercontent.com/gcode4421-oss/opal-packages/main/packages/crypto/crypto.op",
+      "tags": ["crypto", "security", "hash"]
+    },
+    {
+      "name": "datetime",
+      "version": "1.0.0",
+      "description": "Date and time utilities / أدوات التاريخ والوقت",
+      "author": "Opal Team",
+      "license": "MIT",
+      "homepage": "https://github.com/gcode4421-oss/opal-packages/tree/main/packages/datetime",
+      "download_url": "https://raw.githubusercontent.com/gcode4421-oss/opal-packages/main/packages/datetime/datetime.op",
+      "tags": ["date", "time", "calendar"]
+    },
+    {
+      "name": "logger",
+      "version": "1.0.0",
+      "description": "Logging utility / أداة التسجيل",
+      "author": "Opal Team",
+      "license": "MIT",
+      "homepage": "https://github.com/gcode4421-oss/opal-packages/tree/main/packages/logger",
+      "download_url": "https://raw.githubusercontent.com/gcode4421-oss/opal-packages/main/packages/logger/logger.op",
+      "tags": ["logging", "debug", "log"]
+    },
+    {
+      "name": "args",
+      "version": "1.0.0",
+      "description": "Command-line argument parser / محلل وسائط سطر الأوامر",
+      "author": "Opal Team",
+      "license": "MIT",
+      "homepage": "https://github.com/gcode4421-oss/opal-packages/tree/main/packages/args",
+      "download_url": "https://raw.githubusercontent.com/gcode4421-oss/opal-packages/main/packages/args/args.op",
+      "tags": ["cli", "arguments", "parser"]
+    },
+    {
+      "name": "regex",
+      "version": "1.0.0",
+      "description": "Regular expressions for Opal / التعبيرات النمطية لأوبال",
+      "author": "Opal Team",
+      "license": "MIT",
+      "homepage": "https://github.com/gcode4421-oss/opal-packages/tree/main/packages/regex",
+      "download_url": "https://raw.githubusercontent.com/gcode4421-oss/opal-packages/main/packages/regex/regex.op",
+      "tags": ["regex", "pattern", "match"]
+    }
+  ]
+}

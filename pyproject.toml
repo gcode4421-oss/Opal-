@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "opal-lang"
-version = "2.2.0"
+version = "2.3.0"
 description = "Opal - A powerful beginner-friendly programming language with Arabic and English support, colors, and C transpiler"
 readme = "README.md"
 requires-python = ">=3.8"
@@ -81,6 +81,7 @@ Changelog = "https://github.com/gcode4421-oss/Opal-/blob/main/CHANGELOG.md"
 
 [project.scripts]
 opal = "opal.main:main"
+opi = "opal.opi:main"
 
 [tool.setuptools]
 packages = ["opal", "opal.stdlib"]

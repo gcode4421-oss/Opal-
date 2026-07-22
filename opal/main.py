@@ -24,7 +24,7 @@ from opal.interpreter import Interpreter, OpalError
 
 
 # Version / الإصدار
-OPAL_VERSION = "2.2.0"
+OPAL_VERSION = "2.3.0"
 
 
 def run_file(filepath, verbose=False):

@@ -122,6 +122,7 @@ KEYWORDS = {
     'import': TokenType.IMPORT,
     'from': TokenType.FROM,
     'echo': TokenType.ECHO,
+    'print': TokenType.ECHO,  # alias for echo / بديل لـ echo
     'and': TokenType.AND,
     'or': TokenType.OR,
     'not': TokenType.NOT,

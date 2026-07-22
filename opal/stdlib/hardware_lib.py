@@ -117,37 +117,120 @@ def _cpu_info():
         'python_version': platform.python_version(),
         'system': platform.system(),
         'release': platform.release(),
+        'model': '',
+        'vendor': '',
+        'flags': [],
     }
 
     # Try to get CPU model on Linux / محاولة الحصول على نموذج المعالج
     try:
         with open('/proc/cpuinfo', 'r') as f:
             for line in f:
-                if line.startswith('model name'):
-                    info['model'] = line.split(':')[1].strip()
-                    break
+                line = line.strip()
+                if line.startswith('model name') and not info['model']:
+                    info['model'] = line.split(':', 1)[1].strip()
+                elif line.startswith('Processor') and not info['model']:
+                    # Android format: "Processor : ARMv7 Processor rev 4 (v7l)"
+                    info['model'] = line.split(':', 1)[1].strip()
+                elif line.startswith('Hardware') and not info['vendor']:
+                    # Android Hardware field
+                    info['vendor'] = line.split(':', 1)[1].strip()
+                elif line.startswith('CPU implementer') and not info['vendor']:
+                    info['vendor'] = line.split(':', 1)[1].strip()
+                elif line.startswith('Features') and not info['flags']:
+                    info['flags'] = line.split(':', 1)[1].strip().split()
     except:
         pass
+
+    # Try Termux API for Android / تجربة Termux API للأندرويد
+    try:
+        result = subprocess.run(
+            ['termux-cpu-info'],
+            capture_output=True, text=True, timeout=5
+        )
+        if result.returncode == 0:
+            import json
+            try:
+                data = json.loads(result.stdout)
+                if isinstance(data, list) and len(data) > 0:
+                    cpu0 = data[0]
+                    if 'name' in cpu0 and cpu0['name']:
+                        info['model'] = cpu0['name']
+                    if 'core_count' in cpu0:
+                        info['cores'] = cpu0['core_count']
+                    if 'vendor' in cpu0:
+                        info['vendor'] = cpu0['vendor']
+            except json.JSONDecodeError:
+                pass
+    except (FileNotFoundError, subprocess.TimeoutExpired):
+        pass
+
+    # Fallback for architecture-based model / اسم بناءً على البنية
+    if not info['model']:
+        arch = info['architecture']
+        if 'aarch64' in arch or 'arm64' in arch:
+            info['model'] = 'ARMv8 Processor (64-bit)'
+        elif 'arm' in arch:
+            info['model'] = 'ARM Processor'
+        elif 'x86_64' in arch:
+            info['model'] = 'x86_64 Processor'
+        elif 'x86' in arch:
+            info['model'] = 'x86 Processor'
+        else:
+            info['model'] = f'{arch} Processor'
 
     return info
 
 
 def _cpu_count():
     """عدد أنوية المعالج / CPU core count"""
+    # Try Termux first / تجربة Termux أولاً
+    try:
+        result = subprocess.run(
+            ['termux-cpu-info'],
+            capture_output=True, text=True, timeout=5
+        )
+        if result.returncode == 0:
+            import json
+            data = json.loads(result.stdout)
+            if isinstance(data, list) and len(data) > 0:
+                if 'core_count' in data[0]:
+                    return data[0]['core_count']
+    except:
+        pass
     return os.cpu_count() or 1
 
 
 def _cpu_percent():
     """نسبة استخدام المعالج / CPU usage percent"""
+    # Try Termux API / تجربة Termux API
     try:
-        # Get CPU usage from /proc/stat / الحصول على الاستخدام من /proc/stat
+        result = subprocess.run(
+            ['termux-cpu-info'],
+            capture_output=True, text=True, timeout=5
+        )
+        if result.returncode == 0:
+            import json
+            data = json.loads(result.stdout)
+            if isinstance(data, list):
+                total_usage = 0
+                count = 0
+                for core in data:
+                    if 'usage' in core:
+                        total_usage += core['usage']
+                        count += 1
+                if count > 0:
+                    return round(total_usage / count, 1)
+    except:
+        pass
+
+    # Linux /proc/stat method / طريقة /proc/stat على لينكس
+    try:
         with open('/proc/stat', 'r') as f:
             line = f.readline()
         parts = line.split()[1:]
-        # user, nice, system, idle, etc.
         total = sum(int(x) for x in parts)
         idle = int(parts[3])
-        # Sample again after a delay / أخذ عينة أخرى بعد تأخير
         import time
         time.sleep(0.1)
         with open('/proc/stat', 'r') as f:
@@ -155,7 +238,6 @@ def _cpu_percent():
         parts2 = line.split()[1:]
         total2 = sum(int(x) for x in parts2)
         idle2 = int(parts2[3])
-        # Calculate percentage / حساب النسبة
         total_diff = total2 - total
         idle_diff = idle2 - idle
         if total_diff > 0:
@@ -167,18 +249,43 @@ def _cpu_percent():
 
 def _cpu_freq():
     """تردد المعالج / CPU frequency"""
+    # Try all CPU cores / تجربة كل أنوية المعالج
     try:
-        with open('/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq', 'r') as f:
-            return int(f.read().strip()) / 1000  # Convert to MHz
+        for i in range(8):
+            path = f'/sys/devices/system/cpu/cpu{i}/cpufreq/scaling_cur_freq'
+            if os.path.exists(path):
+                with open(path, 'r') as f:
+                    return int(f.read().strip()) / 1000  # Convert to MHz
     except:
         pass
+
+    # Try /proc/cpuinfo / تجربة /proc/cpuinfo
     try:
         with open('/proc/cpuinfo', 'r') as f:
             for line in f:
-                if line.startswith('cpu MHz'):
-                    return float(line.split(':')[1].strip())
+                if line.startswith('cpu MHz') or line.startswith('BogoMIPS'):
+                    val = line.split(':')[1].strip()
+                    return float(val)
     except:
         pass
+
+    # Try Termux / تجربة Termux
+    try:
+        result = subprocess.run(
+            ['termux-cpu-info'],
+            capture_output=True, text=True, timeout=5
+        )
+        if result.returncode == 0:
+            import json
+            data = json.loads(result.stdout)
+            if isinstance(data, list) and len(data) > 0:
+                if 'frequencies' in data[0]:
+                    freqs = data[0]['frequencies']
+                    if freqs:
+                        return max(freqs) / 1000  # Convert to MHz
+    except:
+        pass
+
     return 0
 
 
@@ -385,13 +492,47 @@ def _is_charging():
 
 def _cpu_temp():
     """حرارة المعالج / CPU temperature"""
-    # Try /sys/class/thermal / تجربة /sys/class/thermal
+    # Try Termux API first (Android) / تجربة Termux API أولاً
     try:
-        for i in range(5):
+        result = subprocess.run(
+            ['termux-cpu-info'],
+            capture_output=True, text=True, timeout=5
+        )
+        if result.returncode == 0:
+            import json
+            data = json.loads(result.stdout)
+            if isinstance(data, list) and len(data) > 0:
+                if 'temperature' in data[0] and data[0]['temperature'] is not None:
+                    return float(data[0]['temperature'])
+                # Some versions use 'temp'
+                if 'temp' in data[0] and data[0]['temp'] is not None:
+                    return float(data[0]['temp'])
+    except:
+        pass
+
+    # Try /sys/class/thermal (Linux) / تجربة /sys/class/thermal على لينكس
+    try:
+        for i in range(10):
             path = f'/sys/class/thermal/thermal_zone{i}/temp'
             if os.path.exists(path):
                 with open(path, 'r') as f:
-                    return int(f.read().strip()) / 1000  # Convert to Celsius
+                    val = int(f.read().strip())
+                    if val > 0:
+                        return val / 1000  # Convert to Celsius
+    except:
+        pass
+
+    # Try hwmon (some devices) / تجربة hwmon
+    try:
+        for hwmon_dir in ['/sys/class/hwmon']:
+            if os.path.exists(hwmon_dir):
+                for entry in os.listdir(hwmon_dir):
+                    temp_file = os.path.join(hwmon_dir, entry, 'temp1_input')
+                    if os.path.exists(temp_file):
+                        with open(temp_file, 'r') as f:
+                            val = int(f.read().strip())
+                            if val > 0:
+                                return val / 1000
     except:
         pass
 
@@ -404,6 +545,25 @@ def _cpu_temp():
         if result.returncode == 0:
             temp_str = result.stdout.split('=')[1].split("'")[0]
             return float(temp_str)
+    except:
+        pass
+
+    # Try sensors command / تجربة أمر sensors
+    try:
+        result = subprocess.run(
+            ['sensors'],
+            capture_output=True, text=True, timeout=5
+        )
+        if result.returncode == 0:
+            for line in result.stdout.split('\n'):
+                if 'temp' in line.lower() or 'Core' in line:
+                    # Parse temperature from line
+                    import re
+                    match = re.search(r'[\+\-]?(\d+\.?\d*)', line.split(':')[-1] if ':' in line else line)
+                    if match:
+                        val = float(match.group(1))
+                        if 0 < val < 150:
+                            return val
     except:
         pass
 
